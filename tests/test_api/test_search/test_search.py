@@ -1,8 +1,8 @@
 import requests
-
+from jsonschema import validate
 from .Search import Search
 from tests.src.enum_api import EnumAPI, EnumMessagesError
-from .SearchSchema import GetSearch
+from .SearchSchema import GetSearchSchema
 
 
 
@@ -12,6 +12,7 @@ def test_search_geocodejson():
     )
     search_response = Search(response)
     print(search_response.response_json['geocoding'])
-    search_response.validate(GetSearch)
+    validate(search_response.response_json, GetSearchSchema)
+    #search_response.validate(GetSearch)
     search_response.assert_status_code(200)
 

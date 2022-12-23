@@ -1,11 +1,41 @@
-from pydantic import BaseModel, Field
-from typing import Dict, List, Optional
+GetSearchSchema = {
+    "type": "object",
+    "properties": {
+        "type": {"type": "string"},
+    },
+    "additionalProperties": {
+        "type": "object",
+        "required": [
+            "version",
+            "atribute",
+            "lecence",
+            "query"
+        ],
+        "properties": {
+            "version": {
+                "type": "string"
+            },
+            "atribute": {
+                "type": "string",
+            },
+            "lecence": {
+                "type": "string",
+            },
+            "query": {
+                "type": "string"
+            }
+        },
+
+        "features": {"type": "list"},
+        "geometry": {"type": "dictionary"}
+    },
+    #"required": ["geometry"]
+}
 
 
 class GetSearch(BaseModel):
     #type: str
     geocoding: Dict[str, str]
-    #features: List[Dict[str, str]]
 
 
 
@@ -13,7 +43,8 @@ class GetSearch(BaseModel):
 
 
 
-    """""
+
+"""""
     type: str
     geocoding: dict(
         {
