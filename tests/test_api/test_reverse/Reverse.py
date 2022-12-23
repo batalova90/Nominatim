@@ -1,5 +1,6 @@
+import requests
 from tests.src.enum_api import EnumMessagesError
-
+from Data.data_zoom import zoom_label
 
 class Reverse:
     def __init__(self, response):
@@ -28,3 +29,15 @@ class Reverse:
         else:
             schema.parse_obj(self.response_json['features']['geometry'])
         return schema
+
+    def set_response_json(self, url_default, zoom=None):
+        if zoom is None:
+            self.response_json = self.response.json()
+        else:
+            get_url = url_default + zoom
+            self.response_json = requests.get(get_url).json()
+
+    def validate_zoom(self, zoom):
+        label_answer = self.response_json['features'][0]['properties']['geocoding']['label']
+        assert label_answer == zoom_label[zoom]
+
