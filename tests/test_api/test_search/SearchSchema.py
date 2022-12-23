@@ -3,9 +3,9 @@ from typing import Dict, List, Optional
 
 
 class GetSearch(BaseModel):
-    type: str
+    #type: str
     geocoding: Dict[str, str]
-    features: List[Dict[str, str]]
+    #features: List[Dict[str, str]]
 
 
 
