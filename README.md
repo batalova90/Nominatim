@@ -23,3 +23,8 @@ python - http://uchcom7.botik.ru/L/prog/python/python_01.pdf
 DDT - https://jazzteam.org/ru/technical-articles/data-driven-testing/
 pytest (несколько старая, но емко-годная) - https://eax.me/pytest/
 request - https://python-scripts.com/requests
+
+
+https://stackoverflow.com/questions/43875741/allure-command-not-found-on-linux
+pytest -s -v --alluredir=allureres
+allure serve allureres
