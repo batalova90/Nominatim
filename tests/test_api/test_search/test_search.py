@@ -1,6 +1,7 @@
 from .SearchSchema import GeocodingData, PropertiesGeocodingData, GeometryData
 
 
+
 def test_status_code_search(search_fixture):
     search_fixture.assert_status_code(200)
 

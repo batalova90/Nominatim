@@ -13,3 +13,4 @@ class EnumMessagesError(enum.Enum):
     INVALID_ID = "Invalid place id"
     INVALID_TYPE = "Type must be a Point"
     INVALID_COORDINATES = "Invalid Coordinates"
+    INVALID_NAME = "Invalid name object"
