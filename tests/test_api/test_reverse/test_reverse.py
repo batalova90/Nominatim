@@ -27,3 +27,6 @@ def test_zoom_reverse(reverse_fixture, zoom):
     reverse_fixture.set_response_json(EnumAPI.REVERSE_ZOOM.value, zoom)
     reverse_fixture.validate_zoom(zoom)
     reverse_fixture.set_response_json(EnumAPI.REVERSE_JSON.value)
+
+def test_check_report_allure(reverse_fixture):
+    assert 1 == 2, "1 is not equal 2"
