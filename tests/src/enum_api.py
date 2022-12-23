@@ -6,6 +6,7 @@ class EnumAPI(enum.Enum):
     REVERSE_JSON = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=38.005169699999996&lon=23.72949633941048"
     REVERSE_ZOOM = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=56.91231&lon=92.85655&zoom="
 
+
 class EnumMessagesError(enum.Enum):
     NOT_200 = "Status code is not 200"
     LICENCE_WRONG = "Invalid license type"
