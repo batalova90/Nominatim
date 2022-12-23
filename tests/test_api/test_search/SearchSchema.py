@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, validator
 from typing import List
 
 from tests.src.enum_api import EnumMessagesError
@@ -51,4 +51,11 @@ class GeometryData(BaseModel):
     def validator_type(cls, type):
         assert type == "Point", EnumMessagesError.INVALID_TYPE.value
         return type
+
+    @validator('coordinates')
+    def validator_coordinates(cls, coordinates):
+        latitude = coordinates[1]
+        longitude = coordinates[0]
+        assert latitude == places[0]["latitude"], EnumMessagesError.INVALID_COORDINATES.value
+        assert longitude == places[0]["longitude"], EnumMessagesError.INVALID_COORDINATES.value
 

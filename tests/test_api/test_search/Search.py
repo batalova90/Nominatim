@@ -1,4 +1,4 @@
-from tests.src.enum_api import EnumAPI, EnumMessagesError
+from tests.src.enum_api import EnumMessagesError
 
 
 class Search:
