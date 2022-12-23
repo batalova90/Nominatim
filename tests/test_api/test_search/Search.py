@@ -8,7 +8,15 @@ class Search:
         self.status_code = response.status_code
 
     def validate(self, schema):
-        schema.parse_obj(self.response_json['geocoding'])
+        # schema.parse_obj(self.response_json['geocoding'])
+        if isinstance(self.response_json['features'], list):
+            for features in self.response_json['features']:
+                #schema.parse_obj(features['properties']['geocoding'])
+                schema.parse_obj(features['geometry'])
+        else:
+            #schema.parse_obj(self.response_json['features']['properties']['geocoding'])
+            schema.parse_obj(self.response_json['features']['geometry'])
         return schema
+
     def assert_status_code(self, status_code):
         assert self.status_code == status_code, EnumMessagesError.NOT_200.value

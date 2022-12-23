@@ -1,80 +1,54 @@
-GetSearchSchema = {
-    "type": "object",
-    "properties": {
-        "type": {"type": "string"},
-    },
-    "additionalProperties": {
-        "type": "object",
-        "required": [
-            "version",
-            "atribute",
-            "lecence",
-            "query"
-        ],
-        "properties": {
-            "version": {
-                "type": "string"
-            },
-            "atribute": {
-                "type": "string",
-            },
-            "lecence": {
-                "type": "string",
-            },
-            "query": {
-                "type": "string"
-            }
-        },
+from pydantic import BaseModel, validator, Field
+from typing import List
 
-        "features": {"type": "list"},
-        "geometry": {"type": "dictionary"}
-    },
-    #"required": ["geometry"]
-}
+from tests.src.enum_api import EnumMessagesError
+from Data.places import places
 
 
-class GetSearch(BaseModel):
-    #type: str
-    geocoding: Dict[str, str]
+class GeocodingData(BaseModel):
+    version: str
+    attribution: str
+    licence: str
+    query: str
+
+    @validator('licence')
+    def validator_licence(cls, licence):
+        assert licence == "ODbL", EnumMessagesError.LICENCE_WRONG.value
+        return licence
+
+    @validator('query')
+    def validator_place(cls, query):
+        query_list = query.split(', ')
+        keys = ["name", "city", "region", "country"]
+        query_dict = dict(zip(keys, query_list))
+        for key, value in query_dict.items():
+            # убрать [0]!!!
+            assert value == places[0][key], EnumMessagesError.INVALID_QUERY.value
+        return query
 
 
-
-
-
-
-
-
-"""""
+class PropertiesGeocodingData(BaseModel):
+    place_id: int
+    osm_type: str
+    osm_id: int
+    osm_key: str
+    osm_value: str
     type: str
-    geocoding: dict(
-        {
-            "version": str,
-            "attribution": str,
-            "licence": str,
-            "query": str,
-        })
-    features: list[
-        dict[{
-            "type": str,
-            "properties": dict({
-                "geocoding": dict({
-                    "place_id": int,
-                    "osm_type": str,
-                    "osm_id": int,
-                    "osm_key": str,
-                    "osm_value": str,
-                    "type": str,
-                    "label": str,
-                    "name": str,
-                })
-            }),
-            "geometry": dict({
-                "type": str,
-                "coordinates": list([
-                    int,
-                    int
-                ])
-            })
-        }]
-    ]
-"""""
+    label: str
+    name: str
+
+    @validator('place_id')
+    def validator_place_id(cls, place_id):
+        assert place_id == places[0]["place_id"], EnumMessagesError.INVALID_ID.value
+        return place_id
+
+
+class GeometryData(BaseModel):
+    type: str
+    coordinates: List[float]
+
+    @validator('type')
+    def validator_type(cls, type):
+        assert type == "Point", EnumMessagesError.INVALID_TYPE.value
+        return type
+

@@ -7,3 +7,7 @@ class EnumAPI(enum.Enum):
 
 class EnumMessagesError(enum.Enum):
     NOT_200 = "Status code is not 200"
+    LICENCE_WRONG = "Invalid license type"
+    INVALID_QUERY = "Object data doesn't match"
+    INVALID_ID = "Invalid place id"
+    INVALID_TYPE = "Type must be a Point"
