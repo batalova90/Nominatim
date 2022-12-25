@@ -27,3 +27,17 @@ places = [{
         }
 
 ]
+
+
+# данные для поиска мест по ключевым словам и городу
+special_phrases = ['bank', 'bar', 'clinic',
+                   'fast_food', 'fuel', 'ice_cream',
+                   'marketplace', 'pharmacy']
+city = ['dublin', 'copenhagen',
+        'edinburgh', 'brasov',
+        'budapest', 'bruges',
+        'belgrade', 'seville',
+        'venice', 'tallinn',
+        'keiptaun', 'nairobi',
+        'mumbai', 'seoul',
+        'kolkata', 'tianjin']

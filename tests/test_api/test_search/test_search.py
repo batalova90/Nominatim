@@ -1,7 +1,10 @@
 import allure
+from pytest import mark
+import requests
+from random import randint
 
 from .SearchSchema import GeocodingData, PropertiesGeocodingData, GeometryData
-
+from Data import places
 
 def test_status_code_search(search_fixture):
     """
@@ -39,3 +42,20 @@ def test_geometry_data_search(search_fixture):
     allure.attach.file('attachment/Query_example.png', name='Example query')
     allure.attach.file('attachment/Coordinates.png', name='Example coordinates')
 
+
+@mark.parametrize('execution_number', range(5))
+def test_test_compares_places_and_coordinates(execution_number):
+    """
+    Проверка возврата координат объекта по ключевым словам
+    и городу (search/reverse-запросы)
+    """
+    special_word = places.special_phrases[randint(0, len(places.special_phrases)-1)]
+    city_word = places.city[randint(0, len(places.city)-1)]
+    limit = randint(1, 50)
+    response_search = requests.get(
+        f'https://nominatim.openstreetmap.org/?addressdetails=1&q={special_word}+{city_word}&format=json&limit={limit}'
+    )
+    response_search_json = response_search.json()
+    # получить массив координат, затем прогнать запросы по reverse,
+    # сравнить между собой по индексу, либо индексу и координатам
+    print(response_search_json)

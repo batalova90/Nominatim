@@ -59,7 +59,7 @@ class PropertiesGeocodingDataReverse(BaseModel):
     @classmethod
     @validator('street')
     def validator_street(cls, street):
-        assert street == places[0]["city"], EnumMessagesError.INVALID_STREET
+        assert street == places[0]["city"], EnumMessagesError.INVALID_STREET.value
         return street
 
 

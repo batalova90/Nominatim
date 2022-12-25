@@ -49,7 +49,8 @@ class GeometryData(BaseModel):
 
     @validator('type')
     def validator_type(cls, type):
-        assert type == "Point", EnumMessagesError.INVALID_TYPE.value
+        if type != "Point":
+            raise ValueError(EnumMessagesError.INVALID_TYPE.value)
         return type
 
     @validator('coordinates')
