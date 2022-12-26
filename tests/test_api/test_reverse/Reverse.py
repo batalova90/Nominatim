@@ -1,6 +1,8 @@
 import requests
-from tests.src.enum_api import EnumMessagesError
+
 from Data.data_zoom import zoom_label
+from tests.src.enum_api import EnumMessagesError
+
 
 class Reverse:
     def __init__(self, response):

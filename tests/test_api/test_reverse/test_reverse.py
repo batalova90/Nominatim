@@ -1,9 +1,10 @@
-import pytest
 import allure
+import pytest
 
-from .ReverseSchema import GeocodingDataReverse, PropertiesGeocodingDataReverse
-from ..test_search.SearchSchema import GeometryData
 from tests.src.enum_api import EnumAPI
+
+from ..test_search.SearchSchema import GeometryData
+from .ReverseSchema import GeocodingDataReverse, PropertiesGeocodingDataReverse
 
 
 def test_status_code_reverse(reverse_fixture):
@@ -20,6 +21,7 @@ def test_geocoding_data_reverse(reverse_fixture):
     reverse_fixture.validate_geocoding_data(GeocodingDataReverse)
     allure.attach.file('attachment/Query_example_reverse.png', name='Example query')
     allure.attach.file('attachment/Query_reverse.png', name='Query')
+
 
 def test_properties_geocoding_data_reverse(reverse_fixture):
     """
@@ -52,12 +54,3 @@ def test_zoom_reverse(reverse_fixture, zoom):
     reverse_fixture.validate_zoom(zoom)
     reverse_fixture.set_response_json(EnumAPI.REVERSE_JSON.value)
     allure.attach.file(f'attachment/Query_example_reverse{zoom}.png', name=f'Example query(zoom={zoom})')
-
-
-"""
-def test_check_report_allure(reverse_fixture):
-    
-    Failed тест для примера     
-    
-    assert 1 == 2, "1 is not equal 2"
-"""

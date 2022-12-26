@@ -30,8 +30,7 @@ class Search:
         assert self.status_code == status_code, EnumMessagesError.NOT_200.value
 
     @staticmethod
-    def get_osm_id(response_search_json,
-                   coordinates: list):
+    def get_osm_id(response_search_json, coordinates):
         coordinates.append(response_search_json["lat"])
         coordinates.append(response_search_json["lon"])
         return response_search_json["osm_id"]

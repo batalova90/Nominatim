@@ -1,8 +1,9 @@
-from pydantic import BaseModel, validator
 from typing import List
 
-from tests.src.enum_api import EnumMessagesError
+from pydantic import BaseModel, validator
+
 from Data.places import places
+from tests.src.enum_api import EnumMessagesError
 
 
 class GeocodingData(BaseModel):

@@ -1,8 +1,9 @@
-from pydantic import BaseModel, validator
-from typing import List, Dict
+from typing import Dict, List
 
-from tests.src.enum_api import EnumMessagesError
+from pydantic import BaseModel, validator
+
 from Data.places import places
+from tests.src.enum_api import EnumMessagesError
 
 
 class GeocodingDataReverse(BaseModel):
@@ -43,7 +44,6 @@ class PropertiesGeocodingDataReverse(BaseModel):
     street: str
     admin: Dict[str, str]
 
-
     @classmethod
     @validator('place_id')
     def validator_place_id(cls, place_id):
@@ -61,6 +61,3 @@ class PropertiesGeocodingDataReverse(BaseModel):
     def validator_street(cls, street):
         assert street == places[0]["city"], EnumMessagesError.INVALID_STREET.value
         return street
-
-
-

@@ -1,12 +1,15 @@
-import allure
-from pytest import mark
-import requests
 from random import randint
 
-from .SearchSchema import GeocodingData, PropertiesGeocodingData, GeometryData
+import allure
+import requests
+from pytest import mark
+
 from Data import places
 from tests.src.enum_api import EnumMessagesError
+
 from . import Search
+from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData
+
 
 def test_status_code_search(search_fixture):
     """
@@ -17,7 +20,7 @@ def test_status_code_search(search_fixture):
 
 def test_geocoding_data_search(search_fixture):
     """
-    Проверка декодирования запроса сервером (search-запрос)
+    Проверка декодирования запроса сервером (search-запрос).
     """
     search_fixture.validate_geocoding_data(GeocodingData)
     allure.attach.file('attachment/Query_example.png', name='Example query')
@@ -27,7 +30,7 @@ def test_geocoding_data_search(search_fixture):
 def test_properties_geocoding_data_search(search_fixture):
     """
     Проверка возврата характеристик объекта (place_id)
-    (search-запрос)
+    (search-запрос).
     """
     search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
     allure.attach.file('attachment/Query_example.png', name='Example query')
