@@ -29,15 +29,26 @@ places = [{
 ]
 
 
-# данные для поиска мест по ключевым словам и городу
-special_phrases = ['bank', 'bar', 'clinic',
-                   'fast_food', 'fuel', 'ice_cream',
-                   'marketplace', 'pharmacy']
-city = ['dublin', 'copenhagen',
-        'edinburgh', 'brasov',
-        'budapest', 'bruges',
-        'belgrade', 'seville',
-        'venice', 'tallinn',
-        'keiptaun', 'nairobi',
-        'mumbai', 'seoul',
-        'kolkata', 'tianjin']
+
+city = ['bank+dublin+grafton+street+105-106',
+        'clinic+copenhagen+københavn+2720',
+        'bar+edinburg+greenside+56A',
+        'bar+edinburg+greenside+29-31',
+        'school+edinburg+greenside+EH7+5BL',
+        'bank+brasov+Strada+Piața+Teatrului',
+        'budapest+Fogarasi',
+        'budapest+Villa+del+Lago',
+        'budapest+Finn+Nagykövetség',
+        'administrative+venice',
+        'village+venice+Plaquemines+Parish',
+        'tallinn+Szolnok+Szolnoki',
+        'bank+keiptaun+Western+Cape+7735',
+        'school+tallin', 'nairobi+nakuru+20100',
+        'hospital+mumbai',
+        'kolkata+Goa+Bagan+Street+700006',
+        'police+kolkata+Kapilatola',
+        'police+kolkata+Museum+700016',
+        'q=police+kolkata+Museum+700006',
+        'tianjin+天津市+中国+300010',
+        'tianjin+慶應仲通り+108-0014'
+        ]

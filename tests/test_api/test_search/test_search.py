@@ -5,13 +5,14 @@ from random import randint
 
 from .SearchSchema import GeocodingData, PropertiesGeocodingData, GeometryData
 from Data import places
+from tests.src.enum_api import EnumMessagesError
+from . import Search
 
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)
     """
     search_fixture.assert_status_code(200)
-
 
 
 def test_geocoding_data_search(search_fixture):
@@ -43,19 +44,27 @@ def test_geometry_data_search(search_fixture):
     allure.attach.file('attachment/Coordinates.png', name='Example coordinates')
 
 
-@mark.parametrize('execution_number', range(5))
-def test_test_compares_places_and_coordinates(execution_number):
+@mark.parametrize("city",
+                  places.city,
+                  ids=[x for x in places.city])
+def test_compares_places_and_coordinates(city):
     """
-    Проверка возврата координат объекта по ключевым словам
-    и городу (search/reverse-запросы)
+    Проверка возврата координат объекта.
+    Сравнение данных search - reverse запросов (по osm_id).
     """
-    special_word = places.special_phrases[randint(0, len(places.special_phrases)-1)]
-    city_word = places.city[randint(0, len(places.city)-1)]
-    limit = randint(1, 50)
+    # city = places.city[randint(0, len(places.city)-1)]
     response_search = requests.get(
-        f'https://nominatim.openstreetmap.org/?addressdetails=1&q={special_word}+{city_word}&format=json&limit={limit}'
+        f'https://nominatim.openstreetmap.org/?addressdetails=0&amenity={city}&format=json&limit=50'
     )
     response_search_json = response_search.json()
-    # получить массив координат, затем прогнать запросы по reverse,
-    # сравнить между собой по индексу, либо индексу и координатам
-    print(response_search_json)
+    coordinates = []
+    if len(response_search_json) != 0:
+        osm_id_search = Search.Search.get_osm_id(
+            response_search_json[0],
+            coordinates
+        )
+        response_reverse_json = requests.get(
+                f'https://nominatim.openstreetmap.org/reverse?format=json&lat={coordinates[0]}&lon={coordinates[1]}'
+        ).json()
+        osm_id_reverse = response_reverse_json['osm_id']
+        assert osm_id_reverse == osm_id_search, EnumMessagesError.INVALID_OSM_ID.value

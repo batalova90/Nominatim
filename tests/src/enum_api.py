@@ -15,3 +15,4 @@ class EnumMessagesError(enum.Enum):
     INVALID_TYPE = "Type must be a Point"
     INVALID_COORDINATES = "Invalid Coordinates"
     INVALID_NAME = "Invalid name object"
+    INVALID_OSM_ID = "OSM_ID objects search and reverse requests is not equal"

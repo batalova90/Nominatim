@@ -54,8 +54,10 @@ def test_zoom_reverse(reverse_fixture, zoom):
     allure.attach.file(f'attachment/Query_example_reverse{zoom}.png', name=f'Example query(zoom={zoom})')
 
 
+"""
 def test_check_report_allure(reverse_fixture):
-    """
+    
     Failed тест для примера     
-    """
+    
     assert 1 == 2, "1 is not equal 2"
+"""
