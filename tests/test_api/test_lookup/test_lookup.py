@@ -10,6 +10,7 @@ from Data import places
 @mark.parametrize("osm_id",
                   places.osm_id,
                   ids=[x['osm_id'] for x in places.osm_id])
+@allure.title("Coordinates: {osm_id[lat]}, {osm_id[lon]}")
 def test_lookup_coordinates(osm_id):
     """
     Проверка возврата координат объекта.

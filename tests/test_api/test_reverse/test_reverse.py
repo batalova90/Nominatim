@@ -70,6 +70,7 @@ def test_geometry_data_reverse(reverse_fixture):
 @allure.tag('Reverse')
 @pytest.mark.parametrize("zoom",
                          ['3', '6', '8', '12', '14', '18'])
+@allure.title("Zoom: {zoom}")
 def test_zoom_reverse(reverse_fixture, zoom):
     """
     Проверка возврата lable объекта при изменении параметра zoom
