@@ -7,6 +7,7 @@ class EnumAPI(enum.Enum):
     REVERSE_ZOOM = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=56.91231&lon=92.85655&zoom="
     SEARCH_OBJECT = "https://nominatim.openstreetmap.org/?addressdetails=0&amenity="
     REVERSE_OBJECT = "https://nominatim.openstreetmap.org/reverse?format=json&lat="
+    LOOKUP_JSON = "https://nominatim.openstreetmap.org/lookup?format=json&osm_ids=W"
 
 
 class EnumMessagesError(enum.Enum):
@@ -18,3 +19,5 @@ class EnumMessagesError(enum.Enum):
     INVALID_COORDINATES = "Invalid Coordinates"
     INVALID_NAME = "Invalid name object"
     INVALID_OSM_ID = "OSM_ID objects search and reverse requests is not equal"
+    INVALID_LONGITUDE_LOOKUP = "Invalid longitude"
+    INVALID_LATITUDE_LOOKUP = "Invalid latitude"

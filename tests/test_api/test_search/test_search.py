@@ -22,10 +22,12 @@ def test_geocoding_data_search(search_fixture):
     """
     search_fixture.validate_geocoding_data(GeocodingData)
     allure.attach.file(
-        'attachment/Query_example.png', name='Example query'
+        'attachment/Query_example.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Query_search.png', name='Decoding query'
+        'attachment/Query_search.png',
+        name='Decoding query'
     )
 
 
@@ -36,10 +38,12 @@ def test_properties_geocoding_data_search(search_fixture):
     """
     search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
     allure.attach.file(
-        'attachment/Query_example.png', name='Example query'
+        'attachment/Query_example.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Search_place_id.png', name='Check place_id'
+        'attachment/Search_place_id.png',
+        name='Check place_id'
     )
 
 
@@ -50,10 +54,12 @@ def test_geometry_data_search(search_fixture):
     """
     search_fixture.validate_geometry_data(GeometryData)
     allure.attach.file(
-        'attachment/Query_example.png', name='Example query'
+        'attachment/Query_example.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Coordinates.png', name='Example coordinates'
+        'attachment/Coordinates.png',
+        name='Example coordinates'
     )
 
 
@@ -81,4 +87,5 @@ def test_compares_places_and_coordinates(place):
                 get_url_reverse
         ).json()
         osm_id_reverse = response_reverse_json['osm_id']
-        assert osm_id_reverse == osm_id_search, EnumMessagesError.INVALID_OSM_ID.value
+        assert osm_id_reverse == osm_id_search,\
+            EnumMessagesError.INVALID_OSM_ID.value

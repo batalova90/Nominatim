@@ -20,10 +20,12 @@ def test_geocoding_data_reverse(reverse_fixture):
     """
     reverse_fixture.validate_geocoding_data(GeocodingDataReverse)
     allure.attach.file(
-        'attachment/Query_example_reverse.png', name='Example query'
+        'attachment/Query_example_reverse.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Query_reverse.png', name='Query'
+        'attachment/Query_reverse.png',
+        name='Query'
     )
 
 
@@ -36,10 +38,12 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
         PropertiesGeocodingDataReverse
     )
     allure.attach.file(
-        'attachment/Query_example_reverse.png', name='Example query'
+        'attachment/Query_example_reverse.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Geocoding_data.png', name='Geocoding data'
+        'attachment/Geocoding_data.png',
+        name='Geocoding data'
     )
 
 
@@ -50,10 +54,12 @@ def test_geometry_data_reverse(reverse_fixture):
     """
     reverse_fixture.validate_geometry_data(GeometryData)
     allure.attach.file(
-        'attachment/Query_example_reverse.png', name='Example query'
+        'attachment/Query_example_reverse.png',
+        name='Example query'
     )
     allure.attach.file(
-        'attachment/Geometry_data.png', name='Geometry data'
+        'attachment/Geometry_data.png',
+        name='Geometry data'
     )
 
 

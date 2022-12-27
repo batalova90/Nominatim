@@ -55,7 +55,8 @@ class Search:
         """
         Проверка статуса кода ответа сервера
         """
-        assert self.status_code == status_code, EnumMessagesError.NOT_200.value
+        assert self.status_code == status_code,\
+            EnumMessagesError.NOT_200.value
 
     @staticmethod
     def get_osm_id(response_search_json, coordinates):
