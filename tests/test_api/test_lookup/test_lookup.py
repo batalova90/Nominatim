@@ -14,9 +14,7 @@ def test_lookup_coordinates(osm_id):
     Lookup - запрос
     """
     osm_id_get = osm_id['osm_id']
-    print(osm_id_get)
     get_url_lookup = EnumAPI.LOOKUP_JSON.value + f'{osm_id_get}'
-    print(get_url_lookup)
     response_lookup = requests.get(
         get_url_lookup
     )
