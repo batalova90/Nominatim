@@ -1,11 +1,13 @@
 from pytest import mark
 import allure
 import requests
+from allure_commons.types import Severity
 
 from tests.src.enum_api import EnumMessagesError, EnumAPI
 from Data import places
 
 
+@allure.severity(Severity.CRITICAL)
 @allure.tag('Lookup')
 @mark.parametrize("osm_id",
                   places.osm_id,

@@ -1,4 +1,5 @@
 import allure
+from allure_commons.types import Severity
 import pytest
 
 from tests.src.enum_api import EnumAPI
@@ -7,6 +8,7 @@ from ..test_search.SearchSchema import GeometryData
 from .ReverseSchema import GeocodingDataReverse, PropertiesGeocodingDataReverse
 
 
+@allure.severity(Severity.BLOCKER)
 @allure.tag('Reverse')
 def test_status_code_reverse(reverse_fixture):
     """
@@ -15,6 +17,7 @@ def test_status_code_reverse(reverse_fixture):
     reverse_fixture.assert_status_code(200)
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 def test_geocoding_data_reverse(reverse_fixture):
     """
@@ -31,6 +34,7 @@ def test_geocoding_data_reverse(reverse_fixture):
     )
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 def test_properties_geocoding_data_reverse(reverse_fixture):
     """
@@ -50,6 +54,7 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
     )
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 def test_geometry_data_reverse(reverse_fixture):
     """
@@ -67,6 +72,7 @@ def test_geometry_data_reverse(reverse_fixture):
     )
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 @pytest.mark.parametrize("zoom",
                          ['3', '6', '8', '12', '14', '18'])

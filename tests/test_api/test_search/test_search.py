@@ -1,6 +1,9 @@
+from logging import CRITICAL
+
 import allure
 import requests
 from pytest import mark
+from allure_commons.types import Severity
 
 from Data import places
 from tests.src.enum_api import EnumMessagesError, EnumAPI
@@ -9,6 +12,7 @@ from . import Search
 from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData
 
 
+@allure.severity(Severity.BLOCKER)
 @allure.tag('Added tag', 'Search')
 def test_status_code_search(search_fixture):
     """
@@ -17,6 +21,7 @@ def test_status_code_search(search_fixture):
     search_fixture.assert_status_code(200)
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 def test_geocoding_data_search(search_fixture):
     """
@@ -33,6 +38,7 @@ def test_geocoding_data_search(search_fixture):
     )
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 def test_properties_geocoding_data_search(search_fixture):
     """
@@ -50,6 +56,7 @@ def test_properties_geocoding_data_search(search_fixture):
     )
 
 
+@allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 def test_geometry_data_search(search_fixture):
     """
@@ -67,6 +74,7 @@ def test_geometry_data_search(search_fixture):
     )
 
 
+@allure.severity(Severity.CRITICAL)
 @allure.tag('Search')
 @mark.parametrize("place",
                   places.city,
