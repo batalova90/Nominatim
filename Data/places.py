@@ -1,6 +1,6 @@
 places = [{
         "name": "Αγία Τριάδα",
-        "city": "Αδωνιδος", #==street
+        "city": "Αδωνιδος", # ==street
         "region": "Athens",
         "country": "Greece",
         "place_id": 123941922,
@@ -29,14 +29,12 @@ places = [{
 ]
 
 
-
 city = ['bank+dublin+grafton+street+105-106',
         'clinic+copenhagen+københavn+2720',
         'bar+edinburg+greenside+56A',
         'bar+edinburg+greenside+29-31',
         'school+edinburg+greenside+EH7+5BL',
         'bank+brasov+Strada+Piața+Teatrului',
-        'budapest+Fogarasi',
         'budapest+Villa+del+Lago',
         'budapest+Finn+Nagykövetség',
         'administrative+venice',
@@ -50,5 +48,6 @@ city = ['bank+dublin+grafton+street+105-106',
         'police+kolkata+Museum+700016',
         'q=police+kolkata+Museum+700006',
         'tianjin+天津市+中国+300010',
-        'tianjin+慶應仲通り+108-0014'
+        'tianjin+慶應仲通り+108-0014',
+        'kolorado+Buchanan+Dam'
         ]

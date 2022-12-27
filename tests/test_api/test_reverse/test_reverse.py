@@ -19,8 +19,12 @@ def test_geocoding_data_reverse(reverse_fixture):
     Проверка запроса (reverse-запрос)
     """
     reverse_fixture.validate_geocoding_data(GeocodingDataReverse)
-    allure.attach.file('attachment/Query_example_reverse.png', name='Example query')
-    allure.attach.file('attachment/Query_reverse.png', name='Query')
+    allure.attach.file(
+        'attachment/Query_example_reverse.png', name='Example query'
+    )
+    allure.attach.file(
+        'attachment/Query_reverse.png', name='Query'
+    )
 
 
 def test_properties_geocoding_data_reverse(reverse_fixture):
@@ -28,9 +32,15 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
     Проверка возврата характеристик объекта (place_id, label, name и т.д.)
     (reverse-запрос)
     """
-    reverse_fixture.validate_properties_geocoding_data(PropertiesGeocodingDataReverse)
-    allure.attach.file('attachment/Query_example_reverse.png', name='Example query')
-    allure.attach.file('attachment/Geocoding_data.png', name='Geocoding data')
+    reverse_fixture.validate_properties_geocoding_data(
+        PropertiesGeocodingDataReverse
+    )
+    allure.attach.file(
+        'attachment/Query_example_reverse.png', name='Example query'
+    )
+    allure.attach.file(
+        'attachment/Geocoding_data.png', name='Geocoding data'
+    )
 
 
 def test_geometry_data_reverse(reverse_fixture):
@@ -39,8 +49,12 @@ def test_geometry_data_reverse(reverse_fixture):
     (reverse-запрос)
     """
     reverse_fixture.validate_geometry_data(GeometryData)
-    allure.attach.file('attachment/Query_example_reverse.png', name='Example query')
-    allure.attach.file('attachment/Geometry_data.png', name='Geometry data')
+    allure.attach.file(
+        'attachment/Query_example_reverse.png', name='Example query'
+    )
+    allure.attach.file(
+        'attachment/Geometry_data.png', name='Geometry data'
+    )
 
 
 @pytest.mark.parametrize("zoom",
@@ -50,7 +64,12 @@ def test_zoom_reverse(reverse_fixture, zoom):
     Проверка возврата lable объекта при изменении параметра zoom
     (reverse-запрос)
     """
-    reverse_fixture.set_response_json(EnumAPI.REVERSE_ZOOM.value, zoom)
+    reverse_fixture.set_response_json(
+        EnumAPI.REVERSE_ZOOM.value, zoom
+    )
     reverse_fixture.validate_zoom(zoom)
     reverse_fixture.set_response_json(EnumAPI.REVERSE_JSON.value)
-    allure.attach.file(f'attachment/Query_example_reverse{zoom}.png', name=f'Example query(zoom={zoom})')
+    allure.attach.file(
+        f'attachment/Query_example_reverse{zoom}.png',
+        name=f'Example query(zoom={zoom})'
+    )
