@@ -25,6 +25,6 @@ pytest (несколько старая, но емко-годная) - https://e
 request - https://python-scripts.com/requests
 
 
-https://stackoverflow.com/questions/43875741/allure-command-not-found-on-linux
+
 pytest -s -v --alluredir=allureres
 allure serve allureres
