@@ -7,6 +7,7 @@ from ..test_search.SearchSchema import GeometryData
 from .ReverseSchema import GeocodingDataReverse, PropertiesGeocodingDataReverse
 
 
+@allure.tag('Reverse')
 def test_status_code_reverse(reverse_fixture):
     """
     Проверка кода ответа сервера (reverse-запрос)
@@ -14,6 +15,7 @@ def test_status_code_reverse(reverse_fixture):
     reverse_fixture.assert_status_code(200)
 
 
+@allure.tag('Reverse')
 def test_geocoding_data_reverse(reverse_fixture):
     """
     Проверка запроса (reverse-запрос)
@@ -29,6 +31,7 @@ def test_geocoding_data_reverse(reverse_fixture):
     )
 
 
+@allure.tag('Reverse')
 def test_properties_geocoding_data_reverse(reverse_fixture):
     """
     Проверка возврата характеристик объекта (place_id, label, name и т.д.)
@@ -47,6 +50,7 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
     )
 
 
+@allure.tag('Reverse')
 def test_geometry_data_reverse(reverse_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
@@ -63,6 +67,7 @@ def test_geometry_data_reverse(reverse_fixture):
     )
 
 
+@allure.tag('Reverse')
 @pytest.mark.parametrize("zoom",
                          ['3', '6', '8', '12', '14', '18'])
 def test_zoom_reverse(reverse_fixture, zoom):

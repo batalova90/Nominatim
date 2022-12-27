@@ -1,10 +1,12 @@
 from pytest import mark
+import allure
 import requests
 
 from tests.src.enum_api import EnumMessagesError, EnumAPI
 from Data import places
 
 
+@allure.tag('Lookup')
 @mark.parametrize("osm_id",
                   places.osm_id,
                   ids=[x['osm_id'] for x in places.osm_id])

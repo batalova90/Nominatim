@@ -9,6 +9,7 @@ from . import Search
 from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData
 
 
+@allure.tag('Added tag', 'Search')
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)
@@ -16,6 +17,7 @@ def test_status_code_search(search_fixture):
     search_fixture.assert_status_code(200)
 
 
+@allure.tag('Search')
 def test_geocoding_data_search(search_fixture):
     """
     Проверка декодирования запроса сервером (search-запрос).
@@ -31,6 +33,7 @@ def test_geocoding_data_search(search_fixture):
     )
 
 
+@allure.tag('Search')
 def test_properties_geocoding_data_search(search_fixture):
     """
     Проверка возврата характеристик объекта (place_id)
@@ -47,6 +50,7 @@ def test_properties_geocoding_data_search(search_fixture):
     )
 
 
+@allure.tag('Search')
 def test_geometry_data_search(search_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
@@ -63,6 +67,7 @@ def test_geometry_data_search(search_fixture):
     )
 
 
+@allure.tag('Search')
 @mark.parametrize("place",
                   places.city,
                   ids=[x for x in places.city])
