@@ -28,3 +28,5 @@ request - https://python-scripts.com/requests
 
 pytest -s -v --alluredir=allureres
 allure serve allureres
+
+Добавлен запуск тестов ч/з github actions
