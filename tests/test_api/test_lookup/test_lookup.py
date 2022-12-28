@@ -4,7 +4,7 @@ from allure_commons.types import Severity
 from pytest import mark
 
 from Data import places
-from tests.src.enum_api import EnumAPI, EnumMessagesError
+from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
 
 @allure.severity(Severity.CRITICAL)

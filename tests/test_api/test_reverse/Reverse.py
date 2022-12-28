@@ -1,7 +1,7 @@
 import requests
 
 from Data.data_zoom import zoom_label
-from tests.src.enum_api import EnumMessagesError
+from tests.test_api.enum_api import EnumMessagesError
 
 """
     Класс для проверки формата ответа при reverse-запросе.

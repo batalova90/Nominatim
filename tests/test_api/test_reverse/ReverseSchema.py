@@ -3,7 +3,7 @@ from typing import Dict
 from pydantic import BaseModel, validator
 
 from Data.places import places
-from tests.src.enum_api import EnumMessagesError
+from tests.test_api.enum_api import EnumMessagesError
 
 
 class GeocodingDataReverse(BaseModel):

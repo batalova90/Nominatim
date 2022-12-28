@@ -1,13 +1,14 @@
 import pytest
 import requests
 
-from tests.src.enum_api import EnumAPI
+from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.Reverse import Reverse
 from tests.test_api.test_search.Search import Search
 
 
 @pytest.fixture(scope="session")
 def search_fixture(request):
+    print('\nsearch_fix\n')
     response = requests.get(
         EnumAPI.GEOCODE_JSON.value
     )
