@@ -11,7 +11,7 @@ from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData
 
 
 @allure.severity(Severity.BLOCKER)
-@allure.tag('Added tag', 'Search')
+@allure.tag('Search')
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)

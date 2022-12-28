@@ -8,7 +8,6 @@ from tests.test_api.test_search.Search import Search
 
 @pytest.fixture(scope="session")
 def search_fixture(request):
-    print('\nsearch_fix\n')
     response = requests.get(
         EnumAPI.GEOCODE_JSON.value
     )
