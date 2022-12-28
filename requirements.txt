@@ -14,7 +14,6 @@ mccabe==0.7.0
 packaging==22.0
 pluggy==1.0.0
 py==1.11.0
-# pycodestyle==2.10.0
 pydantic==1.10.2
 pydentic==0.0.1.dev3
 pyflakes==3.0.1
