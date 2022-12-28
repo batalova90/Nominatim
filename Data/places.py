@@ -44,9 +44,11 @@ city = ['bank+dublin+grafton+street+105-106',
         'kolkata+Goa+Bagan+Street+700006',
         'police+kolkata+Kapilatola',
         'police+kolkata+Museum+700016',
-        'q=police+kolkata+Museum+700006',
+        'police+kolkata+Museum+700006',
         'tianjin+天津市+中国+300010',
         'tianjin+慶應仲通り+108-0014',
+        'kolorado+Middle+Park+Medical+Center',
+        'kordova+Zábřeh-Hulváky'
         ]
 
 
