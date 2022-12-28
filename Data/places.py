@@ -38,10 +38,8 @@ city = ['bank+dublin+grafton+street+105-106',
         'budapest+Villa+del+Lago',
         'budapest+Finn+Nagykövetség',
         'administrative+venice',
-        'village+venice+Plaquemines+Parish',
-        'tallinn+Szolnok+Szolnoki',
         'bank+keiptaun+Western+Cape+7735',
-        'school+tallin', 'nairobi+nakuru+20100',
+        'school+tallin',
         'hospital+mumbai',
         'kolkata+Goa+Bagan+Street+700006',
         'police+kolkata+Kapilatola',
@@ -49,7 +47,6 @@ city = ['bank+dublin+grafton+street+105-106',
         'q=police+kolkata+Museum+700006',
         'tianjin+天津市+中国+300010',
         'tianjin+慶應仲通り+108-0014',
-        'kolorado+Buchanan+Dam'
         ]
 
 

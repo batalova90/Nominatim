@@ -84,21 +84,28 @@ def test_compares_places_and_coordinates(place):
     Проверка возврата координат объекта.
     Сравнение данных search - reverse запросов (по osm_id).
     """
-    get_url_search = EnumAPI.SEARCH_OBJECT.value + f'{place}&format=json'
-    response_search = requests.get(
-        get_url_search
-    )
+    with allure.step('Шаг 1: отправить search-запрос.'
+                     'Параметры запроса - наименование обекта'):
+        get_url_search = EnumAPI.SEARCH_OBJECT.value + f'{place}&format=json'
+        response_search = requests.get(
+            get_url_search
+        )
     response_search_json = response_search.json()
     coordinates = []
     if len(response_search_json) != 0:
-        osm_id_search = Search.Search.get_osm_id(
-            response_search_json[0],
-            coordinates
-        )
-        get_url_reverse = EnumAPI.REVERSE_OBJECT.value + f'{coordinates[0]}&lon={coordinates[1]}'
-        response_reverse_json = requests.get(
-                get_url_reverse
-        ).json()
-        osm_id_reverse = response_reverse_json['osm_id']
-        assert osm_id_reverse == osm_id_search,\
-            EnumMessagesError.INVALID_OSM_ID.value
+        with allure.step('Шаг 2: получить данные объекта (координаты, osm_id)'):
+            osm_id_search = Search.Search.get_osm_id(
+                response_search_json[0],
+                coordinates
+            )
+        with allure.step('Шаг 3: отправить reverse-запрос.'
+                         'Параметры запроса - координаты объекта, полученные на шаге 2'):
+            get_url_reverse = EnumAPI.REVERSE_OBJECT.value + f'{coordinates[0]}&lon={coordinates[1]}'
+            response_reverse_json = requests.get(
+                    get_url_reverse
+            ).json()
+        with allure.step('Шаг 4: получить osm_id объекта'):
+            osm_id_reverse = response_reverse_json['osm_id']
+        with allure.step('Шаг 5: сравнить osm_id объектов reverse и search запросов'):
+            assert osm_id_reverse == osm_id_search,\
+                EnumMessagesError.INVALID_OSM_ID.value
