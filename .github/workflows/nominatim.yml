@@ -20,4 +20,4 @@ jobs:
            flake8 ./tests/ --ignore E501,E126,N400
       - name: Test with pytest
         run:
-           pytest
+           pytest ./tests
