@@ -31,3 +31,11 @@ def test_lookup_coordinates(osm_id):
             EnumMessagesError.INVALID_LONGITUDE_LOOKUP.value
         assert coordinates_latitude == osm_id['lat'], \
             EnumMessagesError.INVALID_LATITUDE_LOOKUP.value
+    allure.attach.file(
+        'attachment/Query_example_lookup.png',
+        name='Example query'
+    )
+    allure.attach.file(
+        'attachment/Response_example_lookup.png',
+        name='Example response'
+    )
