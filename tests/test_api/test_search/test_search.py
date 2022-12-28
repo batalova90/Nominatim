@@ -1,10 +1,10 @@
 import allure
 import requests
-from pytest import mark
 from allure_commons.types import Severity
+from pytest import mark
 
 from Data import places
-from tests.src.enum_api import EnumMessagesError, EnumAPI
+from tests.src.enum_api import EnumAPI, EnumMessagesError
 
 from . import Search
 from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData

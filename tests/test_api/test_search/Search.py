@@ -1,6 +1,5 @@
 from tests.src.enum_api import EnumMessagesError
 
-
 """
     Класс для проверки формата ответа при search-запросе.
     Формат - geocodejson

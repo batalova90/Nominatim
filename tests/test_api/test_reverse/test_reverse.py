@@ -1,6 +1,6 @@
 import allure
-from allure_commons.types import Severity
 import pytest
+from allure_commons.types import Severity
 
 from tests.src.enum_api import EnumAPI
 
