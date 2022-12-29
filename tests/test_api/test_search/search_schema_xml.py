@@ -1,4 +1,3 @@
-"""
 from typing import Optional
 
 import pydantic_xml as pxml
@@ -20,7 +19,6 @@ class Place(pxml.BaseXmlModel, tag="place"):
     country_code: str = pxml.element()
 
 
-class SearchResults(pxml.BaseXmlModel, tag="searchresults"):
+class SearchResultsXML(pxml.BaseXmlModel, tag="searchresults"):
     place: Place = pxml.element(tag='place')
 
-"""

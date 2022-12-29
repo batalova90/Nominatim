@@ -6,7 +6,7 @@ class EnumAPI(enum.Enum):
     REVERSE_JSON = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=38.005169699999996&lon=23.72949633941048"
     REVERSE_ZOOM = "https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=56.91231&lon=92.85655&zoom="
     SEARCH_OBJECT = "https://nominatim.openstreetmap.org/?addressdetails=1&q="
-    SEARCH_XML = 'https://nominatim.openstreetmap.org/search?format=xml&addressdetails=1&q='
+    SEARCH_XML = 'https://nominatim.openstreetmap.org/search?q=135+pilkington+avenue,+birmingham&format=xml&polygon_geojson=1&addressdetails=1'
     REVERSE_OBJECT = "https://nominatim.openstreetmap.org/reverse?format=json&lat="
     LOOKUP_JSON = "https://nominatim.openstreetmap.org/lookup?format=json&osm_ids=W"
 
