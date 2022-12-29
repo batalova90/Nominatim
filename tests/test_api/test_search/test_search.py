@@ -109,6 +109,7 @@ def test_compares_places_and_coordinates(place):
             assert osm_id_reverse == osm_id_search,\
                 EnumMessagesError.INVALID_OSM_ID.value
 
+
 def test_search_xml_format():
     response_search = requests.get(
         EnumAPI.SEARCH_XML.value
