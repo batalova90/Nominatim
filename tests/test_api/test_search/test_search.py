@@ -116,3 +116,4 @@ def test_search_xml_format():
     )
     SearchResultsXML.from_xml(response_search.content)
 
+

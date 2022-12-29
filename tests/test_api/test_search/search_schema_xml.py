@@ -22,3 +22,4 @@ class Place(pxml.BaseXmlModel, tag="place"):
 class SearchResultsXML(pxml.BaseXmlModel, tag="searchresults"):
     place: Place = pxml.element(tag='place')
 
+
