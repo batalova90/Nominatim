@@ -115,5 +115,3 @@ def test_search_xml_format():
         EnumAPI.SEARCH_XML.value
     )
     SearchResultsXML.from_xml(response_search.content)
-
-
