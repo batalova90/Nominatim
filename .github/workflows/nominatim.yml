@@ -15,7 +15,7 @@ jobs:
            python3 -m pip install --upgrade pip
            pip3 install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
            pip3 install -r requirements.txt
-           pip3 install pydantic-xml
+           pip install pydantic-xml
       - name: Test with flake8
         run:
            flake8 ./tests/ --ignore E501,E126,N400
