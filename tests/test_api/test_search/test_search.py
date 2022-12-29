@@ -6,8 +6,8 @@ from pytest import mark
 from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
-from . import Search
-from .SearchSchema import GeocodingData, GeometryData, PropertiesGeocodingData
+from . import search
+from .search_schema import GeocodingData, GeometryData, PropertiesGeocodingData
 
 
 @allure.severity(Severity.BLOCKER)
@@ -92,7 +92,7 @@ def test_compares_places_and_coordinates(place):
     coordinates = []
     if len(response_search_json) != 0:
         with allure.step('Шаг 2: получить данные объекта (координаты, osm_id)'):
-            osm_id_search = Search.Search.get_osm_id(
+            osm_id_search = search.Search.get_osm_id(
                 response_search_json[0],
                 coordinates
             )

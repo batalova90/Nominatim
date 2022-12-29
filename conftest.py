@@ -2,8 +2,8 @@ import pytest
 import requests
 
 from tests.test_api.enum_api import EnumAPI
-from tests.test_api.test_reverse.Reverse import Reverse
-from tests.test_api.test_search.Search import Search
+from tests.test_api.test_reverse.reverse import Reverse
+from tests.test_api.test_search.search import Search
 
 
 @pytest.fixture(scope="session")

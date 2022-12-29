@@ -4,8 +4,8 @@ from allure_commons.types import Severity
 
 from tests.test_api.enum_api import EnumAPI
 
-from ..test_search.SearchSchema import GeometryData
-from .ReverseSchema import GeocodingDataReverse, PropertiesGeocodingDataReverse
+from ..test_search.search_schema import GeometryData
+from .reverse_schema import GeocodingDataReverse, PropertiesGeocodingDataReverse
 
 
 @allure.severity(Severity.BLOCKER)
