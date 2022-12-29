@@ -1,3 +1,4 @@
+"""
 from typing import Optional
 
 import pydantic_xml as pxml
@@ -21,3 +22,6 @@ class Place(pxml.BaseXmlModel, tag="place"):
 
 class SearchResults(pxml.BaseXmlModel, tag="searchresults"):
     place: Place = pxml.element(tag='place')
+
+"""
+
