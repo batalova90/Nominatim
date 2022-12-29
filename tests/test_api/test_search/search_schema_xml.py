@@ -1,5 +1,6 @@
-import pydantic_xml as pxml
 from typing import Optional
+
+import pydantic_xml as pxml
 
 
 class Place(pxml.BaseXmlModel, tag="place"):
