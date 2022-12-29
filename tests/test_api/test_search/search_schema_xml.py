@@ -1,7 +1,6 @@
 from typing import Optional
 
 import pydantic_xml as pxml
-import pydantic
 
 
 class Place(pxml.BaseXmlModel, tag="place"):
