@@ -8,7 +8,6 @@ from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
 from . import search
 from .search_schema import GeocodingData, GeometryData, PropertiesGeocodingData
-from .search_schema_xml import SearchResults
 
 
 @allure.severity(Severity.BLOCKER)
@@ -108,13 +107,3 @@ def test_compares_places_and_coordinates(place):
         with allure.step('Шаг 5: сравнить osm_id объектов reverse и search запросов'):
             assert osm_id_reverse == osm_id_search,\
                 EnumMessagesError.INVALID_OSM_ID.value
-
-
-"""
-def test_search_xml():
-    response_search = requests.get(
-        EnumAPI.SEARCH_XML.value + '135+pilkington+avenue,+birmingham'
-    )
-    SearchResults.from_xml(response_search.content)
-"""
-

@@ -24,4 +24,3 @@ class SearchResults(pxml.BaseXmlModel, tag="searchresults"):
     place: Place = pxml.element(tag='place')
 
 """
-
