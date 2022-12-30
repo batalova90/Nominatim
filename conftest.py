@@ -34,6 +34,15 @@ def pytest_collection_modifyitems(session, config, items: list):
         item.name = item.name.encode('utf-8').decode('unicode-escape')
         item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
         if not(exist_name_package(item._nodeid, 'search')):
-            print(item._nodeid)
+            print(item.get_closest_marker)
             items.remove(item)
 
+"""
+def pytest_collection_modifyitems(items):
+    # This hook is called by pytest after it has collected the tests (google its name!)
+    # We can ignore some tests as we see fit here. In particular we ignore the tests that
+    # we have marked with the custom 'dont_collect' mark. This avoids skipping the tests,
+    # since the internal fb infra doesn't like skipping tests.
+    to_keep = [item for item in items if item.get_closest_marker('dont_collect') is None]
+    items[:] = to_keep
+"""
