@@ -3,6 +3,7 @@ import allure
 
 def allure_attach_request(response):
     allure.attach(
+        # response.url.encode('utf-8').decode('unicode-escape'),
         response.url,
         name='Request: ',
         attachment_type=allure.attachment_type.TEXT

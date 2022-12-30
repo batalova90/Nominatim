@@ -22,3 +22,18 @@ def reverse_fixture(request):
     )
     fixture = Reverse(response)
     return fixture
+
+
+def exist_name_package(name_package: str, name: str) -> bool:
+    return name in name_package.split("/")[2].split('_')
+
+
+# отключить пакеты
+def pytest_collection_modifyitems(session, config, items: list):
+    for item in items:
+        item.name = item.name.encode('utf-8').decode('unicode-escape')
+        item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
+        if not(exist_name_package(item._nodeid, 'search')):
+            print(item._nodeid)
+            items.remove(item)
+
