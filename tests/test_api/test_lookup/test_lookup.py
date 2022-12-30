@@ -5,7 +5,9 @@ from pytest import mark
 
 from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
-from ..request_response_output import allure_attach_request, allure_attach_response
+
+from ..request_response_output import (allure_attach_request,
+                                       allure_attach_response)
 
 
 @allure.severity(Severity.CRITICAL)

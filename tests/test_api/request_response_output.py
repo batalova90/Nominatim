@@ -1,5 +1,4 @@
 import allure
-import requests
 
 
 def allure_attach_request(response):

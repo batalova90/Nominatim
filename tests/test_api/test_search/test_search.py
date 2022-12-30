@@ -6,11 +6,12 @@ from pytest import mark
 from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
+from ..request_response_output import (allure_attach_request,
+                                       allure_attach_response)
 from . import search
 from .search_schema import GeocodingData, GeometryData, PropertiesGeocodingData
 from .search_schema_xml import SearchResultsXML
-from ..request_response_output import (allure_attach_request,
-                                       allure_attach_response)
+
 
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Search')

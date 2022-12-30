@@ -4,11 +4,11 @@ from allure_commons.types import Severity
 
 from tests.test_api.enum_api import EnumAPI
 
+from ..request_response_output import (allure_attach_request,
+                                       allure_attach_response)
 from ..test_search.search_schema import GeometryData
 from .reverse_schema import (GeocodingDataReverse,
                              PropertiesGeocodingDataReverse)
-from ..request_response_output import (allure_attach_request,
-                                       allure_attach_response)
 
 
 @allure.severity(Severity.BLOCKER)
