@@ -7,6 +7,8 @@ from tests.test_api.enum_api import EnumAPI
 from ..test_search.search_schema import GeometryData
 from .reverse_schema import (GeocodingDataReverse,
                              PropertiesGeocodingDataReverse)
+from ..request_response_output import (allure_attach_request,
+                                       allure_attach_response)
 
 
 @allure.severity(Severity.BLOCKER)
@@ -16,6 +18,8 @@ def test_status_code_reverse(reverse_fixture):
     Проверка кода ответа сервера (reverse-запрос)
     """
     reverse_fixture.assert_status_code(200)
+    allure_attach_request(reverse_fixture.response)
+    allure_attach_response(reverse_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -25,14 +29,8 @@ def test_geocoding_data_reverse(reverse_fixture):
     Проверка запроса (reverse-запрос)
     """
     reverse_fixture.validate_geocoding_data(GeocodingDataReverse)
-    allure.attach.file(
-        'attachment/Query_example_reverse.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Query_reverse.png',
-        name='Query'
-    )
+    allure_attach_request(reverse_fixture.response)
+    allure_attach_response(reverse_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -45,14 +43,8 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
     reverse_fixture.validate_properties_geocoding_data(
         PropertiesGeocodingDataReverse
     )
-    allure.attach.file(
-        'attachment/Query_example_reverse.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Geocoding_data.png',
-        name='Geocoding data'
-    )
+    allure_attach_request(reverse_fixture.response)
+    allure_attach_response(reverse_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -63,14 +55,8 @@ def test_geometry_data_reverse(reverse_fixture):
     (reverse-запрос)
     """
     reverse_fixture.validate_geometry_data(GeometryData)
-    allure.attach.file(
-        'attachment/Query_example_reverse.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Geometry_data.png',
-        name='Geometry data'
-    )
+    allure_attach_request(reverse_fixture.response)
+    allure_attach_response(reverse_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -88,7 +74,4 @@ def test_zoom_reverse(reverse_fixture, zoom):
     )
     reverse_fixture.validate_zoom(zoom)
     reverse_fixture.set_response_json(EnumAPI.REVERSE_JSON.value)
-    allure.attach.file(
-        f'attachment/Query_example_reverse{zoom}.png',
-        name=f'Example query(zoom={zoom})'
-    )
+

@@ -9,7 +9,8 @@ from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 from . import search
 from .search_schema import GeocodingData, GeometryData, PropertiesGeocodingData
 from .search_schema_xml import SearchResultsXML
-
+from ..request_response_output import (allure_attach_request,
+                                       allure_attach_response)
 
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Search')
@@ -27,14 +28,8 @@ def test_geocoding_data_search(search_fixture):
     Проверка декодирования запроса сервером (search-запрос).
     """
     search_fixture.validate_geocoding_data(GeocodingData)
-    allure.attach.file(
-        'attachment/Query_example.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Query_search.png',
-        name='Decoding query'
-    )
+    allure_attach_request(search_fixture.response)
+    allure_attach_response(search_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -45,14 +40,8 @@ def test_properties_geocoding_data_search(search_fixture):
     (search-запрос).
     """
     search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
-    allure.attach.file(
-        'attachment/Query_example.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Search_place_id.png',
-        name='Check place_id'
-    )
+    allure_attach_request(search_fixture.response)
+    allure_attach_response(search_fixture.response)
 
 
 @allure.severity(Severity.NORMAL)
@@ -63,14 +52,8 @@ def test_geometry_data_search(search_fixture):
     (search-запрос)
     """
     search_fixture.validate_geometry_data(GeometryData)
-    allure.attach.file(
-        'attachment/Query_example.png',
-        name='Example query'
-    )
-    allure.attach.file(
-        'attachment/Coordinates.png',
-        name='Example coordinates'
-    )
+    allure_attach_request(search_fixture.response)
+    allure_attach_response(search_fixture.response)
 
 
 @allure.severity(Severity.CRITICAL)
@@ -91,6 +74,8 @@ def test_compares_places_and_coordinates(place):
         )
     response_search_json = response_search.json()
     coordinates = []
+    allure_attach_request(response_search)
+    allure_attach_response(response_search)
     if len(response_search_json) != 0:
         with allure.step('Шаг 2: получить данные объекта (координаты, osm_id)'):
             osm_id_search = search.Search.get_osm_id(
@@ -114,4 +99,6 @@ def test_search_xml_format():
     response_search = requests.get(
         EnumAPI.SEARCH_XML.value
     )
+    allure_attach_request(response_search)
+    allure_attach_response(response_search)
     SearchResultsXML.from_xml(response_search.content)
