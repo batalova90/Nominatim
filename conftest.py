@@ -37,7 +37,14 @@ def pytest_collection_modifyitems(session, config, items: list):
             print(item.get_closest_marker)
             items.remove(item)
 
+
 """
+def pytest_configure(config):
+    # register an additional marker (see pytest_collection_modifyitems)
+    config.addinivalue_line(
+        "markers", "dont_collect: marks a test that should not be collected (avoids skipping it)"
+    )
+https://github.com/yzc1114/DLProfiler/blob/ce6d93a655c69958928a1b9d2332356b0a42b56f/model_factory/repos/pytorch_vision_v0.10.0/test/conftest.py
 def pytest_collection_modifyitems(items):
     # This hook is called by pytest after it has collected the tests (google its name!)
     # We can ignore some tests as we see fit here. In particular we ignore the tests that
