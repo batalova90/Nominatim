@@ -34,3 +34,4 @@ allure serve allureres
 https://pytest-docs-ru.readthedocs.io/ru/latest/example/simple.html - док-ция
 
 
+https://pytest-docs-ru.readthedocs.io/ru/latest/example/simple.html - инф об упавших тестах
