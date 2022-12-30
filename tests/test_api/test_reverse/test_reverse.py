@@ -74,4 +74,3 @@ def test_zoom_reverse(reverse_fixture, zoom):
     )
     reverse_fixture.validate_zoom(zoom)
     reverse_fixture.set_response_json(EnumAPI.REVERSE_JSON.value)
-
