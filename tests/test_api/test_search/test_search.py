@@ -2,6 +2,7 @@ import allure
 import requests
 from allure_commons.types import Severity
 from pytest import mark
+import logging
 
 from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
@@ -12,6 +13,9 @@ from . import search
 from .search_schema import GeocodingData, GeometryData, PropertiesGeocodingData
 from .search_schema_xml import SearchResultsXML
 
+
+logger = logging.getLogger(__name__)
+sublogger = logging.getLogger(__name__ + ".baz")
 
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Search')
@@ -103,3 +107,12 @@ def test_search_xml_format():
     allure_attach_request(response_search)
     allure_attach_response(response_search)
     SearchResultsXML.from_xml(response_search.content)
+
+
+def test_foo(caplog, search_fixture):
+    caplog.set_level(logging.INFO)
+    logger.debug("handler INFO level")
+    caplog.set_level(logging.CRITICAL, logger='search_fixture')
+    sublogger.warning("logger WARNING level")
+    sublogger.critical("logger CRITICAL level")
+    print(caplog.records)
