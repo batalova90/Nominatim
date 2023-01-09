@@ -56,7 +56,6 @@ def test_properties_geocoding_data_search(search_fixture):
         raise
 
 
-
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 def test_geometry_data_search(search_fixture):
@@ -71,7 +70,6 @@ def test_geometry_data_search(search_fixture):
     except ValidationError:
         logging.exception('Validation error geometry (search response)')
         raise
-
 
 
 @allure.severity(Severity.CRITICAL)
@@ -132,7 +130,7 @@ def test_search_xml_format():
         SearchResultsXML.from_xml(response_search.content)
     except ValidationError:
         logging.exception(
-            f'Validation error xml-format'
+            'Validation error xml-format'
         )
         raise
 
