@@ -18,58 +18,76 @@ from .search_schema_xml import SearchResultsXML
 
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Search')
+@allure.title('Server status code (search request)')
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)
     """
-    search_fixture.assert_status_code(200)
+    with allure.step('Шаг 1: отправить search-запроc.'):
+        allure_attach_request(search_fixture.response)
+        allure_attach_response(search_fixture.response)
+    with allure.step('Шаг 2: проверить статус кода ответа сервера, '
+                     'ожидаемый результат - 200'):
+        search_fixture.assert_status_code(200)
 
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
+@allure.title('Validate geocoding data (search request)')
 def test_geocoding_data_search(search_fixture):
     """
     Проверка декодирования запроса сервером (search-запрос).
     """
-    allure_attach_request(search_fixture.response)
-    allure_attach_response(search_fixture.response)
-    try:
-        search_fixture.validate_geocoding_data(GeocodingData)
-    except ValidationError:
-        logging.exception('Validation error geocoding (search response)')
-        raise
+    with allure.step('Шаг 1: отправить search-запроc.'):
+        allure_attach_request(search_fixture.response)
+        allure_attach_response(search_fixture.response)
+    with allure.step('Шаг 2: проверить json-схему ответа'
+                     '(параметр - geocoding)'):
+        try:
+            search_fixture.validate_geocoding_data(GeocodingData)
+        except ValidationError:
+            logging.exception('Validation error geocoding (search response)')
+            raise
 
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
+@allure.title('Validate properties (search request)')
 def test_properties_geocoding_data_search(search_fixture):
     """
     Проверка возврата характеристик объекта (place_id)
     (search-запрос).
     """
-    allure_attach_request(search_fixture.response)
-    allure_attach_response(search_fixture.response)
-    try:
-        search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
-    except ValidationError:
-        logging.exception('Validation error properties (search response)')
-        raise
+    with allure.step('Шаг 1: отправить search-запроc.'):
+        allure_attach_request(search_fixture.response)
+        allure_attach_response(search_fixture.response)
+    with allure.step('Шаг 2: проверить json-схему ответа'
+                     '(параметр - properties)'):
+        try:
+            search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
+        except ValidationError:
+            logging.exception('Validation error properties (search response)')
+            raise
 
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
+@allure.title('Validate coordinates (seqrch request)')
 def test_geometry_data_search(search_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
     (search-запрос)
     """
-    allure_attach_request(search_fixture.response)
-    allure_attach_response(search_fixture.response)
-    try:
-        search_fixture.validate_geometry_data(GeometryData)
-    except ValidationError:
-        logging.exception('Validation error geometry (search response)')
-        raise
+    with allure.step('Шаг 1: отправить search-запроc.'):
+        allure_attach_request(search_fixture.response)
+        allure_attach_response(search_fixture.response)
+    with allure.step('Шаг 2: проверить json-схему ответа'
+                     '(параметр - geometry)'):
+        try:
+            search_fixture.validate_geometry_data(GeometryData)
+        except ValidationError:
+            logging.exception('Validation error geometry (search response)')
+            raise
 
 
 @allure.severity(Severity.CRITICAL)
@@ -77,6 +95,7 @@ def test_geometry_data_search(search_fixture):
 @mark.parametrize("place",
                   places.city,
                   ids=[x for x in places.city])
+@allure.title('Compare places and coordinates')
 def test_compares_places_and_coordinates(place):
     """
     Проверка возврата координат объекта.
@@ -119,20 +138,24 @@ def test_compares_places_and_coordinates(place):
                 EnumMessagesError.INVALID_OSM_ID.value
 
 
+@allure.title('Validate xml format')
 def test_search_xml_format():
-    response_search = requests.get(
-        EnumAPI.SEARCH_XML.value
-    )
-    logging.info(
-        f'Request: {response_search.url},\nResponse: {response_search.content}'
-    )
-    try:
-        SearchResultsXML.from_xml(response_search.content)
-    except ValidationError:
-        logging.exception(
-            'Validation error xml-format'
+    with allure.step('Шаг 1: отправить search-запрос.'
+                     'Формат ответа - xml'):
+        response_search = requests.get(
+            EnumAPI.SEARCH_XML.value
         )
-        raise
+        logging.info(
+            f'Request: {response_search.url},\nResponse: {response_search.content}'
+        )
+    with allure.step('Шаг 2: проверить xml-схему ответа'):
+        try:
+            SearchResultsXML.from_xml(response_search.content)
+        except ValidationError:
+            logging.exception(
+                'Validation error xml-format'
+            )
+            raise
 
 
 def test_foo(search_fixture):
@@ -140,3 +163,4 @@ def test_foo(search_fixture):
         search_fixture.response.status_code
     )
     assert 1 == 2
+
