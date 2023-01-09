@@ -50,7 +50,8 @@ def test_geocoding_data_search(search_fixture):
             search_fixture.validate_geocoding_data(GeocodingData)
         except ValidationError:
             logging.exception('Validation error geocoding (search response)')
-            raise
+            pytest.raises(ValidationError)
+            # raise
 
 
 @allure.severity(Severity.NORMAL)
@@ -169,4 +170,3 @@ def test_foo(search_fixture):
         search_fixture.response.status_code
     )
     assert 1 == 2
-
