@@ -1,9 +1,11 @@
 import pytest
 import requests
+import os.path
 
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
+from tests.logger import AllureCatchLogs
 
 
 @pytest.fixture(scope="session")
@@ -28,14 +30,28 @@ def exist_name_package(name_package: str, name: str) -> bool:
     return name in name_package.split("/")[2].split('_')
 
 
-# отключить пакеты
 def pytest_collection_modifyitems(session, config, items: list):
     for item in items:
         item.name = item.name.encode('utf-8').decode('unicode-escape')
         item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
         if not(exist_name_package(item._nodeid, 'search')):
-            print(item.get_closest_marker)
+            # print(item.get_closest_marker)
             items.remove(item)
+
+
+"""
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call" and rep.failed:
+        mode = "a" if os.path.exists("./logs/pytest-logs.txt") else "w"
+        with open("./logs/pytest-logs.txt", mode) as f:
+            f.write(f'{rep.nodeid}\n')
+            logs = AllureCatchLogs()
+"""
+
+
 
 
 """
