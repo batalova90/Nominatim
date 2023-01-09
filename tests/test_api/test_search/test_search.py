@@ -1,6 +1,7 @@
 import logging
 
 import allure
+import pytest
 import requests
 from allure_commons.types import Severity
 from pydantic import ValidationError
@@ -19,6 +20,7 @@ from .search_schema_xml import SearchResultsXML
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Search')
 @allure.title('Server status code (search request)')
+@pytest.mark.check_server
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)
@@ -34,6 +36,7 @@ def test_status_code_search(search_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 @allure.title('Validate geocoding data (search request)')
+@pytest.mark.validate
 def test_geocoding_data_search(search_fixture):
     """
     Проверка декодирования запроса сервером (search-запрос).
@@ -53,6 +56,7 @@ def test_geocoding_data_search(search_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 @allure.title('Validate properties (search request)')
+@pytest.mark.validate
 def test_properties_geocoding_data_search(search_fixture):
     """
     Проверка возврата характеристик объекта (place_id)
@@ -73,6 +77,7 @@ def test_properties_geocoding_data_search(search_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 @allure.title('Validate coordinates (seqrch request)')
+@pytest.mark.validate
 def test_geometry_data_search(search_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
@@ -139,6 +144,7 @@ def test_compares_places_and_coordinates(place):
 
 
 @allure.title('Validate xml format')
+@pytest.mark.validate
 def test_search_xml_format():
     with allure.step('Шаг 1: отправить search-запрос.'
                      'Формат ответа - xml'):

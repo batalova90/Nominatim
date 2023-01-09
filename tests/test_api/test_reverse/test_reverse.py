@@ -17,6 +17,7 @@ from .reverse_schema import (GeocodingDataReverse,
 @allure.severity(Severity.BLOCKER)
 @allure.tag('Reverse')
 @allure.title('Server status code (reverse request)')
+@pytest.mark.check_server
 def test_status_code_reverse(reverse_fixture):
     """
     Проверка кода ответа сервера (reverse-запрос)
@@ -33,6 +34,7 @@ def test_status_code_reverse(reverse_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 @allure.title('Validate geocoding data (reverse request)')
+@pytest.mark.validate
 def test_geocoding_data_reverse(reverse_fixture):
     """
     Проверка запроса (reverse-запрос)
@@ -53,6 +55,7 @@ def test_geocoding_data_reverse(reverse_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 @allure.title('Validate properties (reverse request)')
+@pytest.mark.validate
 def test_properties_geocoding_data_reverse(reverse_fixture):
     """
     Проверка возврата характеристик объекта (place_id, label, name и т.д.)
@@ -77,6 +80,7 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
 @allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
 @allure.title('Validate coordinates (reverse request)')
+@pytest.mark.validate
 def test_geometry_data_reverse(reverse_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
