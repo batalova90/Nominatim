@@ -31,22 +31,30 @@ def pytest_collection_modifyitems(session, config, items: list):
     for item in items:
         item.name = item.name.encode('utf-8').decode('unicode-escape')
         item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
-        print(item.keywords)
-    skip_validate = pytest.mark.skip(reason="need validate option to skip")
-    if config.getoption('skipvalidate') is not None:
-        for item in items:
-            if 'validate' in item.keywords:
-                print(item.keywords)
-                item.add_marker(skip_validate)
+        # print(item.keywords)
+        skip_validate = pytest.mark.skip(reason="need validate option to skip")
+    # if config.getoption('skipvalidate') is not None:
+    for item in items:
+        if 'validate' in item.keywords:
+            print(item)
+            item.add_marker(skip_validate)
+        if 'check_server' in item.keywords:
+            print(item)
+            item.add_marker(skip_validate)
 
 
+
+"""
 def pytest_addoption(parser):
+    print(parser)
     parser.addoption("skipvalidate",
                      action="store",
                      default=None)
     parser.addoption("skipcheck",
                      action="store",
                      default=None)
+"""
+
 
 
 """
