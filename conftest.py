@@ -1,11 +1,12 @@
-import pytest
-import requests
 import os.path
 
+import pytest
+import requests
+
+from tests.logger import AllureCatchLogs
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
-from tests.logger import AllureCatchLogs
 
 
 @pytest.fixture(scope="session")

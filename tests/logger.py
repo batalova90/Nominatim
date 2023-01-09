@@ -1,7 +1,6 @@
 import logging
 
 import allure
-import pytest
 
 logging.basicConfig(format='%(asctime)s  %(levelname)-10s %(processName)s  %(name)s %(message)s',
                     datefmt="%Y-%m-%d-%H-%M-%S")

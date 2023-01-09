@@ -1,9 +1,10 @@
+import logging
+
 import allure
 import requests
 from allure_commons.types import Severity
-from pytest import mark
 from pydantic import ValidationError
-import logging
+from pytest import mark
 
 from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError

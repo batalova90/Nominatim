@@ -1,7 +1,8 @@
+import logging
+
 import allure
 import pytest
 from allure_commons.types import Severity
-import logging
 from pydantic import ValidationError
 
 from tests.test_api.enum_api import EnumAPI
