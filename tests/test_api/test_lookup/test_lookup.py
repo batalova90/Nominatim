@@ -1,17 +1,15 @@
-import logging
 import json
+import logging
 
 import allure
 import requests
 from allure_commons.types import Severity
 from pytest import mark
 
-
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
 from ..request_response_output import (allure_attach_request,
                                        allure_attach_response)
-
 
 with open('./Data/osm_id.json') as f:
     data_osm_id = json.load(f)

@@ -1,9 +1,9 @@
+import json
 import logging
 
 import allure
 import pytest
 import requests
-import json
 from allure_commons.types import Severity
 from pydantic import ValidationError
 from pytest import mark

@@ -1,8 +1,8 @@
+import json
 import os.path
 
 import pytest
 import requests
-import json
 
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
