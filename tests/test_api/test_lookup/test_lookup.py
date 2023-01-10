@@ -1,22 +1,27 @@
 import logging
+import json
 
 import allure
 import requests
 from allure_commons.types import Severity
 from pytest import mark
 
-from Data import places
+
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
 from ..request_response_output import (allure_attach_request,
                                        allure_attach_response)
 
 
+with open('./Data/osm_id.json') as f:
+    data_osm_id = json.load(f)
+
+
 @allure.severity(Severity.CRITICAL)
 @allure.tag('Lookup')
 @mark.parametrize("osm_id",
-                  places.osm_id,
-                  ids=[x['osm_id'] for x in places.osm_id])
+                  data_osm_id,
+                  ids=[x['osm_id'] for x in data_osm_id])
 @allure.title("Coordinates: {osm_id[lat]}, {osm_id[lon]}")
 def test_lookup_coordinates(osm_id):
     """

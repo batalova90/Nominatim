@@ -18,6 +18,7 @@ from .reverse_schema import (GeocodingDataReverse,
 @allure.tag('Reverse')
 @allure.title('Server status code (reverse request)')
 @pytest.mark.check_server
+@pytest.mark.usefixtures('reverse_fixture')
 def test_status_code_reverse(reverse_fixture):
     """
     Проверка кода ответа сервера (reverse-запрос)
@@ -35,6 +36,7 @@ def test_status_code_reverse(reverse_fixture):
 @allure.tag('Reverse')
 @allure.title('Validate geocoding data (reverse request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('reverse_fixture')
 def test_geocoding_data_reverse(reverse_fixture):
     """
     Проверка запроса (reverse-запрос)
@@ -56,6 +58,7 @@ def test_geocoding_data_reverse(reverse_fixture):
 @allure.tag('Reverse')
 @allure.title('Validate properties (reverse request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('reverse_fixture')
 def test_properties_geocoding_data_reverse(reverse_fixture):
     """
     Проверка возврата характеристик объекта (place_id, label, name и т.д.)
@@ -81,6 +84,7 @@ def test_properties_geocoding_data_reverse(reverse_fixture):
 @allure.tag('Reverse')
 @allure.title('Validate coordinates (reverse request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('reverse_fixture')
 def test_geometry_data_reverse(reverse_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
@@ -102,10 +106,11 @@ def test_geometry_data_reverse(reverse_fixture):
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Reverse')
-@pytest.mark.parametrize("zoom",
+@pytest.mark.parametrize('zoom',
                          ['3', '6', '8', '12', '14', '18'])
-@allure.title("Zoom: {zoom}")
-def test_zoom_reverse(reverse_fixture, zoom):
+@allure.title('Zoom: {zoom}')
+@pytest.mark.usefixtures('reverse_fixture', 'zoom_fixture')
+def test_zoom_reverse(reverse_fixture, zoom_fixture, zoom):
     """
     Проверка возврата lable объекта при изменении параметра zoom
     (reverse-запрос)
@@ -113,7 +118,8 @@ def test_zoom_reverse(reverse_fixture, zoom):
     with allure.step('Шаг 1: отправить reverse-запроc.'
                      'Параметры запроса - широта, долгота, zoom'):
         reverse_fixture.set_response_json(
-            EnumAPI.REVERSE_ZOOM.value, zoom
+            EnumAPI.REVERSE_ZOOM.value,
+            zoom
         )
     with allure.step('Шаг 2: получить label объекта'):
         label = reverse_fixture.response_json['features'][0]['properties']['geocoding']['label']
@@ -121,7 +127,7 @@ def test_zoom_reverse(reverse_fixture, zoom):
             f'Response label: {label}, zoom: {zoom}'
         )
     with allure.step('Шаг 3: сравнить label объекта с входными данными'):
-        reverse_fixture.validate_zoom(zoom)
+        reverse_fixture.validate_zoom(zoom_fixture[zoom])
         reverse_fixture.set_response_json(
             EnumAPI.REVERSE_JSON.value
         )

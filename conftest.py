@@ -2,15 +2,15 @@ import os.path
 
 import pytest
 import requests
+import json
 
-from tests.logger import AllureCatchLogs
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
 
 
 @pytest.fixture(scope="session")
-def search_fixture(request):
+def search_fixture():
     response = requests.get(
         EnumAPI.GEOCODE_JSON.value
     )
@@ -19,7 +19,7 @@ def search_fixture(request):
 
 
 @pytest.fixture(scope="session")
-def reverse_fixture(request):
+def reverse_fixture():
     response = requests.get(
         EnumAPI.REVERSE_JSON.value
     )
@@ -27,55 +27,38 @@ def reverse_fixture(request):
     return fixture
 
 
+@pytest.fixture(scope="function")
+def zoom_fixture(request):
+    file_zoom = request.config.getoption("--zoom")
+    with open(f'./Data/{file_zoom}') as f:
+        data_zoom = json.load(f)
+    return data_zoom
+
+
+@pytest.fixture(scope="session")
+def places_fixture(request):
+    file_places = request.config.getoption("--places")
+    with open(f'./Data/{file_places}') as f:
+        data_places = json.load(f)
+    return data_places
+
+
 def pytest_collection_modifyitems(session, config, items: list):
     for item in items:
         item.name = item.name.encode('utf-8').decode('unicode-escape')
         item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
-        # print(item.keywords)
-        skip_validate = pytest.mark.skip(reason="need validate option to skip")
-    # if config.getoption('skipvalidate') is not None:
+    skip_parameter = config.getoption('--skip')
+    if skip_parameter is None:
+        return items
     for item in items:
-        if 'validate' in item.keywords:
-            print(item)
-            item.add_marker(skip_validate)
-        if 'check_server' in item.keywords:
-            print(item)
-            item.add_marker(skip_validate)
+        if skip_parameter in item.keywords:
+            item.add_marker(pytest.mark.skip)
+    return items
 
-
-
-"""
-def pytest_addoption(parser):
-    print(parser)
-    parser.addoption("skipvalidate",
-                     action="store",
-                     default=None)
-    parser.addoption("skipcheck",
-                     action="store",
-                     default=None)
-"""
-
-
-
-"""
 
 def pytest_addoption(parser):
-    parser.addoption(
-        "--runslow", action="store_true", default=False, help="run slow tests"
-    )
+    parser.addoption("--zoom", action="store", default="data_zoom.json")
+    parser.addoption("--places", action="store", default="places.json")
+    parser.addoption("--skip", action="store", default=None)
 
-
-def pytest_configure(config):
-    config.addinivalue_line("markers", "slow: mark test as slow to run")
-
-
-def pytest_collection_modifyitems(config, items):
-    if config.getoption("--runslow"):
-        #  опция --runslow запрошена в командной строке: медленные тесты не пропускаем
-        return
-    skip_slow = pytest.mark.skip(reason="need --runslow option to run")
-    for item in items:
-        if "slow" in item.keywords:
-            item.add_marker(skip_slow)
-"""
 

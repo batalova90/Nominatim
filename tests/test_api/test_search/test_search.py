@@ -3,11 +3,11 @@ import logging
 import allure
 import pytest
 import requests
+import json
 from allure_commons.types import Severity
 from pydantic import ValidationError
 from pytest import mark
 
-from Data import places
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
 
 from ..request_response_output import (allure_attach_request,
@@ -21,6 +21,7 @@ from .search_schema_xml import SearchResultsXML
 @allure.tag('Search')
 @allure.title('Server status code (search request)')
 @pytest.mark.check_server
+@pytest.mark.usefixtures('search_fixture')
 def test_status_code_search(search_fixture):
     """
     Проверка кода ответа сервера (search-запрос)
@@ -37,6 +38,7 @@ def test_status_code_search(search_fixture):
 @allure.tag('Search')
 @allure.title('Validate geocoding data (search request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('search_fixture')
 def test_geocoding_data_search(search_fixture):
     """
     Проверка декодирования запроса сервером (search-запрос).
@@ -50,14 +52,14 @@ def test_geocoding_data_search(search_fixture):
             search_fixture.validate_geocoding_data(GeocodingData)
         except ValidationError:
             logging.exception('Validation error geocoding (search response)')
-            pytest.raises(ValidationError)
-            # raise
+            raise
 
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
 @allure.title('Validate properties (search request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('search_fixture')
 def test_properties_geocoding_data_search(search_fixture):
     """
     Проверка возврата характеристик объекта (place_id)
@@ -79,6 +81,7 @@ def test_properties_geocoding_data_search(search_fixture):
 @allure.tag('Search')
 @allure.title('Validate coordinates (seqrch request)')
 @pytest.mark.validate
+@pytest.mark.usefixtures('search_fixture')
 def test_geometry_data_search(search_fixture):
     """
     Проверка возврата координат объекта (широта, долгота)
@@ -96,13 +99,35 @@ def test_geometry_data_search(search_fixture):
             raise
 
 
+with open('./Data/city.json') as f:
+    data_city = json.load(f)
+
+with open('./Data/city_negative.json') as f_ngtv:
+    data_city_negative = json.load(f_ngtv)
+
+
 @allure.severity(Severity.CRITICAL)
 @allure.tag('Search')
 @mark.parametrize("place",
-                  places.city,
-                  ids=[x for x in places.city])
-@allure.title('Compare places and coordinates')
-def test_compares_places_and_coordinates(place):
+                  data_city,
+                  ids=[x for x in data_city])
+@allure.title('Compare places and coordinates (positive)')
+def test_compares_places_and_coordinates_positive(place):
+    compares_places_and_coordinates(place)
+
+
+@allure.severity(Severity.CRITICAL)
+@allure.tag('Search')
+@mark.parametrize("place",
+                  data_city_negative,
+                  ids=[x for x in data_city_negative])
+@pytest.mark.xfail
+@allure.title('Compare places and coordinates (negative)')
+def test_compares_places_and_coordinates_negative(place):
+    compares_places_and_coordinates(place)
+
+
+def compares_places_and_coordinates(place):
     """
     Проверка возврата координат объекта.
     Сравнение данных search - reverse запросов (по osm_id).
@@ -163,10 +188,3 @@ def test_search_xml_format():
                 'Validation error xml-format'
             )
             raise
-
-
-def test_foo(search_fixture):
-    logging.info(
-        search_fixture.response.status_code
-    )
-    assert 1 == 2

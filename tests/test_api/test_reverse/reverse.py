@@ -1,6 +1,5 @@
 import requests
 
-from Data.data_zoom import zoom_label
 from tests.test_api.enum_api import EnumMessagesError
 
 """
@@ -70,10 +69,10 @@ class Reverse:
                 get_url
             ).json()
 
-    def validate_zoom(self, zoom):
+    def validate_zoom(self, label):
         """
         Проверка отображения поля
         label при изменении параметра zoom в запросе
         """
-        label_answer = self.response_json['features'][0]['properties']['geocoding']['label']
-        assert label_answer == zoom_label[zoom]
+        label_response = self.response_json['features'][0]['properties']['geocoding']['label']
+        assert label_response == label
