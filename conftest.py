@@ -63,17 +63,16 @@ def pytest_collection_modifyitems(session, config, items: list):
 def pytest_exception_interact(node, call, report):
 
     logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
-    print(node.__dict__['fixturenames'])
     testlib = node.__getattribute__('funcargs')
     for key, cls in testlib.items():
-        logging.error(f'[pytest_exception]: {key}')
-        logging.error(f'[pytest_exception]: {cls}')
+        # response + ошибка
         if 'search_fixture' in node.__dict__['fixturenames']:
-            logging.error('fix')
+            search_json = node.__getattribute__('funcargs')['search_fixture'].response.json()
+            logging.error(f'Response: {search_json}')
             print('-------------73-----------')
         # log_path = cls.service.log_path
-        print(node.__dict__['originalname'])
-        print(call)
+        # print(node.__dict__['originalname'])
+        # print(node.__getattribute__('funcargs')['search_fixture'].response.json())
 """
     for key, cls in testlib.items():
         logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
