@@ -1,8 +1,9 @@
 import json
-import os.path
 
 import pytest
 import requests
+import logging
+import allure
 
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
@@ -54,6 +55,47 @@ def pytest_collection_modifyitems(session, config, items: list):
         if skip_parameter in item.keywords:
             item.add_marker(pytest.mark.skip)
     return items
+
+
+# log = logging.getLogger('conftest')
+
+
+def pytest_exception_interact(node, call, report):
+
+    logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
+
+    testlib = node.__getattribute__('funcargs')
+    for key, cls in testlib.items():
+        logging.error(f'[pytest_exception]: {node.__dict__}')
+        logging.error(f'[pytest_exception]: {key}')
+        logging.error(f'[pytest_exception]: {cls}')
+        # log_path = cls.service.log_path
+        print(node.__dict__['originalname'])
+        print(call)
+"""
+    for key, cls in testlib.items():
+        logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
+        logging.debug("[pytest_exception_interact] key: " + str(key))
+        logging.debug("[pytest_exception_interact] cls: " + str(cls))
+        log_path = cls.service.log_path
+        log_name = str(key) + '.log'
+        logging.debug("[pytest_exception_interact] log_name: " + str(log_name))
+        logging.debug("[pytest_exception_interact] log_path: " + str(log_path))
+        if (log_path is not None):
+            logfile = open(log_path, 'r')
+            lines = logfile.read()
+            allure.attach(
+               name=log_name,
+               contents=lines,
+               type=allure.constants.AttachmentType.TEXT)
+
+"""
+
+
+
+"""
+https://www.lambdatest.com/automation-testing-advisor/python/pytest-pytest_exception_interact
+"""
 
 
 def pytest_addoption(parser):

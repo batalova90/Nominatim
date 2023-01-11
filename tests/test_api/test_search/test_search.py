@@ -51,7 +51,7 @@ def test_geocoding_data_search(search_fixture):
         try:
             search_fixture.validate_geocoding_data(GeocodingData)
         except ValidationError:
-            logging.exception('Validation error geocoding (search response)')
+            # logging.exception('Validation error geocoding (search response)')
             raise
 
 

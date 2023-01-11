@@ -23,7 +23,7 @@ class GeocodingData(BaseModel):
     version: str
     attribution: str
     licence: str
-    query: str
+    query: int
 
     @classmethod
     @validator('licence')
