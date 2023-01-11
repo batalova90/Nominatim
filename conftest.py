@@ -63,12 +63,14 @@ def pytest_collection_modifyitems(session, config, items: list):
 def pytest_exception_interact(node, call, report):
 
     logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
-
+    print(node.__dict__['fixturenames'])
     testlib = node.__getattribute__('funcargs')
     for key, cls in testlib.items():
-        logging.error(f'[pytest_exception]: {node.__dict__}')
         logging.error(f'[pytest_exception]: {key}')
         logging.error(f'[pytest_exception]: {cls}')
+        if 'search_fixture' in node.__dict__['fixturenames']:
+            logging.error('fix')
+            print('-------------73-----------')
         # log_path = cls.service.log_path
         print(node.__dict__['originalname'])
         print(call)
