@@ -1,11 +1,9 @@
 import json
-import logging
 
 import allure
 import pytest
 import requests
 from allure_commons.types import Severity
-from pydantic import ValidationError
 from pytest import mark
 
 from tests.test_api.enum_api import EnumAPI, EnumMessagesError
@@ -48,11 +46,7 @@ def test_geocoding_data_search(search_fixture):
         allure_attach_response(search_fixture.response)
     with allure.step('Шаг 2: проверить json-схему ответа'
                      '(параметр - geocoding)'):
-        try:
-            search_fixture.validate_geocoding_data(GeocodingData)
-        except ValidationError:
-            # logging.exception('Validation error geocoding (search response)')
-            raise
+        search_fixture.validate_geocoding_data(GeocodingData)
 
 
 @allure.severity(Severity.NORMAL)
@@ -70,16 +64,12 @@ def test_properties_geocoding_data_search(search_fixture):
         allure_attach_response(search_fixture.response)
     with allure.step('Шаг 2: проверить json-схему ответа'
                      '(параметр - properties)'):
-        try:
-            search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
-        except ValidationError:
-            logging.exception('Validation error properties (search response)')
-            raise
+        search_fixture.validate_properties_geocoding_data(PropertiesGeocodingData)
 
 
 @allure.severity(Severity.NORMAL)
 @allure.tag('Search')
-@allure.title('Validate coordinates (seqrch request)')
+@allure.title('Validate coordinates (search request)')
 @pytest.mark.validate
 @pytest.mark.usefixtures('search_fixture')
 def test_geometry_data_search(search_fixture):
@@ -92,11 +82,7 @@ def test_geometry_data_search(search_fixture):
         allure_attach_response(search_fixture.response)
     with allure.step('Шаг 2: проверить json-схему ответа'
                      '(параметр - geometry)'):
-        try:
-            search_fixture.validate_geometry_data(GeometryData)
-        except ValidationError:
-            logging.exception('Validation error geometry (search response)')
-            raise
+        search_fixture.validate_geometry_data(GeometryData)
 
 
 with open('./Data/city.json') as f:
@@ -148,20 +134,12 @@ def compares_places_and_coordinates(place):
                 response_search_json[0],
                 coordinates
             )
-            logging.info(f'Place lat: {coordinates[0]}, '
-                         f'lon: {coordinates[1]} (search response)')
-
         with allure.step('Шаг 3: отправить reverse-запрос.'
                          'Параметры запроса - координаты объекта, полученные на шаге 2'):
             get_url_reverse = EnumAPI.REVERSE_OBJECT.value + f'{coordinates[0]}&lon={coordinates[1]}'
             response_reverse_json = requests.get(
                     get_url_reverse
             ).json()
-            coordinates_reverse = [
-                response_reverse_json['lat'], response_reverse_json['lon']
-            ]
-            logging.info(f'Place lat: {coordinates_reverse[0]},'
-                         f'lon: {coordinates_reverse[1]} (reverse response)\n')
         with allure.step('Шаг 4: получить osm_id объекта'):
             osm_id_reverse = response_reverse_json['osm_id']
         with allure.step('Шаг 5: сравнить osm_id объектов reverse и search запросов'):
@@ -177,14 +155,5 @@ def test_search_xml_format():
         response_search = requests.get(
             EnumAPI.SEARCH_XML.value
         )
-        logging.info(
-            f'Request: {response_search.url},\nResponse: {response_search.content}'
-        )
     with allure.step('Шаг 2: проверить xml-схему ответа'):
-        try:
-            SearchResultsXML.from_xml(response_search.content)
-        except ValidationError:
-            logging.exception(
-                'Validation error xml-format'
-            )
-            raise
+        SearchResultsXML.from_xml(response_search.content)

@@ -3,12 +3,12 @@ import json
 import pytest
 import requests
 import logging
-import allure
-
+import sys
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
-
+# from tests.test_api.request_response_output import allure_attach_response, allure_attach_request
+import random
 
 @pytest.fixture(scope="session")
 def search_fixture():
@@ -45,53 +45,79 @@ def places_fixture(request):
 
 
 def pytest_collection_modifyitems(session, config, items: list):
+    # print(f'\nConfig: {config}'
+          # f'\nsession: {session}')
+    items_temp = []
     for item in items:
-        item.name = item.name.encode('utf-8').decode('unicode-escape')
-        item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
+        item.name = item.name[:item.name.find('[')]
+        items_temp.append(item.name)
+        # print(f'item.name id: {item._nodeid}')
+        # print(item.reportinfo())
+    # items[:] = items_temp
+
     skip_parameter = config.getoption('--skip')
-    if skip_parameter is None:
-        return items
+    if not (skip_parameter is None):
+        for item in items:
+            print(item.keywords)
+            if skip_parameter in item.keywords:
+                item.add_marker(pytest.mark.skip)
+
+"""
+def pytest_pycollect_makeitem(collector, name, obj):
+    name_temp = 'hjrtiohjirtjhitrhjrithjrithjr'
+    name = name_temp
+    print(name)
+    print(obj)
+    print('\n\n\n')
+"""
+
+def pytest_itemcollected(item):
+    print(item)
+    # item.name = item.name[:item.name.find('[')]
+    i =  random.randint(1, 1000)
+    item._node_id = item._nodeid[:item._nodeid.find('[')] + str(i)
+"""
+def pytest_report_collectionfinish(config, start_path, startdir, items):
     for item in items:
-        if skip_parameter in item.keywords:
-            item.add_marker(pytest.mark.skip)
-    return items
+        item.name = item.name[:item.name.find('[')]
+        print(f'item.name: {item._nodeid}')
+        # item.name = item.name.encode('utf-8').decode('unicode-escape')
+        # item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
+        # print(item.reportinfo())
+    print(items)
+"""
 
 
-# log = logging.getLogger('conftest')
-
-
+@pytest.hookimpl(tryfirst=True)
 def pytest_exception_interact(node, call, report):
+    if 'search_fixture' in node.__dict__['fixturenames']:
+        search_fixture = node.__getattribute__('funcargs')['search_fixture']
+        msg = get_message(call, node.name, search_fixture)
+        logging.exception(
+            msg
+        )
+        return
+    if 'reverse_fixture' in node.__dict__['fixturenames']:
+        reverse_fixture = node.__getattribute__('funcargs')['reverse_fixture']
+        msg = get_message(call, node.name, reverse_fixture)
+        logging.exception(
+            msg
+        )
+        return
+    msg = get_message(call, node.name)
+    logging.exception(msg)
 
-    logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
-    testlib = node.__getattribute__('funcargs')
-    for key, cls in testlib.items():
-        # response + ошибка
-        if 'search_fixture' in node.__dict__['fixturenames']:
-            search_json = node.__getattribute__('funcargs')['search_fixture'].response.json()
-            logging.error(f'Response: {search_json}')
-            print('-------------73-----------')
-        # log_path = cls.service.log_path
-        # print(node.__dict__['originalname'])
-        # print(node.__getattribute__('funcargs')['search_fixture'].response.json())
-"""
-    for key, cls in testlib.items():
-        logging.debug("[pytest_exception_interact] node: " + str(node.__dict__))
-        logging.debug("[pytest_exception_interact] key: " + str(key))
-        logging.debug("[pytest_exception_interact] cls: " + str(cls))
-        log_path = cls.service.log_path
-        log_name = str(key) + '.log'
-        logging.debug("[pytest_exception_interact] log_name: " + str(log_name))
-        logging.debug("[pytest_exception_interact] log_path: " + str(log_path))
-        if (log_path is not None):
-            logfile = open(log_path, 'r')
-            lines = logfile.read()
-            allure.attach(
-               name=log_name,
-               contents=lines,
-               type=allure.constants.AttachmentType.TEXT)
 
-"""
-
+def get_message(call_info, name, fixture=None):
+    seporator = 5*'------------------'
+    if fixture is not None:
+        return (f'Name test: {name}\n'
+                f'Request: {fixture.response.url}\n'
+                f'Response: {fixture.response.json()}\n{call_info.excinfo}'
+                f'\nDuration: {call_info.duration}\n{seporator}\n')
+    return (f'Name test: {name}\n'
+            f'{call_info.excinfo}'
+            f'\nDuration: {call_info.duration}\n{seporator}\n')
 
 
 """

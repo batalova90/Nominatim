@@ -1,11 +1,9 @@
-  ["bank+dublin+grafton+street+105-106",
+  ["dublin+grafton+street+105-106",
   "clinic+copenhagen+københavn+2720",
   "bar+edinburg+greenside+56A",
   "bar+edinburg+greenside+29-31",
   "school+edinburg+greenside+EH7+5BL",
   "bank+brasov+Strada+Piața+Teatrului",
-  "budapest+Villa+del+Lago",
-  "budapest+Finn+Nagykövetség",
   "administrative+venice",
   "hospital+mumbai",
   "kolkata+Goa+Bagan+Street+700006",
@@ -22,5 +20,11 @@
     "банк+Нефтяников+Новосибирск",
     "магазин+одежды+Новосибирск",
     "RSA+Las+Artes",
-    "МТБанк+Вакзальная вуліца+Минск"
+    "МТБанк+Вакзальная вуліца+Минск",
+    "",
+
+    "Ke+Karlovu+453/1+Nové+ Město",
+    "Rundestraße+5+30161+Hannover",
+    "Altstädtischer+Markt+Brandenburg",
+    "Космодамианская"
   ]

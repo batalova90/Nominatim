@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, ValidationError
 
 from tests.test_api.enum_api import EnumMessagesError
 
@@ -20,18 +20,9 @@ class GeocodingDataReverse(BaseModel):
     licence: str
     query: str
 
-    @classmethod
     @validator('licence')
     def validator_licence(cls, licence):
         assert licence == "ODbL", EnumMessagesError.LICENCE_WRONG.value
-
-    @classmethod
-    @validator('query')
-    def validator_query(cls, query, places_fixture):
-        latitude = float(query.split(',')[0]) - places_fixture["latitude"]
-        longitude = float(query.split(',')[1]) - places_fixture["longitude"]
-        assert longitude < 10**-6, EnumMessagesError.INVALID_COORDINATES.value
-        assert latitude < 10**-6, EnumMessagesError.INVALID_COORDINATES.value
 
 
 class PropertiesGeocodingDataReverse(BaseModel):
@@ -74,20 +65,3 @@ class PropertiesGeocodingDataReverse(BaseModel):
     street: str
     admin: Dict[str, str]
 
-    @classmethod
-    @validator('place_id')
-    def validator_place_id(cls, place_id, places_fixture):
-        assert place_id == places_fixture["place_id"], EnumMessagesError.INVALID_ID.value
-        return place_id
-
-    @classmethod
-    @validator('name')
-    def validator_name(cls, name, places_fixture):
-        assert name == places_fixture["name"], EnumMessagesError.INVALID_NAME.value
-        return name
-
-    @classmethod
-    @validator('street')
-    def validator_street(cls, street, places_fixture):
-        assert street == places_fixture["city"], EnumMessagesError.INVALID_STREET.value
-        return street

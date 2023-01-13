@@ -1,5 +1,4 @@
 import json
-import logging
 
 import allure
 import requests
@@ -40,8 +39,6 @@ def test_lookup_coordinates(osm_id):
         with allure.step('Шаг 2: получить данные объекта (широту и долготу)'):
             coordinates_latitude = float(response_lookup_json[0]['lat'])
             coordinates_longitude = float(response_lookup_json[0]['lon'])
-            logging.info(f'Coordinates: lat {coordinates_latitude}, '
-                         f'lon {coordinates_longitude} (lookup response)')
         with allure.step('Шаг 3: сравнить координаты объекта (широту и долготу) '
                          'с входными данными'):
             assert coordinates_longitude == osm_id['lon'],\

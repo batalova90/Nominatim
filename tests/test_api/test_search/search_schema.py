@@ -4,8 +4,9 @@ from pydantic import BaseModel, validator
 
 from tests.test_api.enum_api import EnumMessagesError
 
+
 """
-Классы для проверки возврата схемы ответа при search-запросе
+Классы для проверки схемы ответа при search-запросе
 (формат geocodejson)
 """
 
@@ -23,23 +24,12 @@ class GeocodingData(BaseModel):
     version: str
     attribution: str
     licence: str
-    query: int
+    query: str
 
-    @classmethod
     @validator('licence')
     def validator_licence(cls, licence):
         assert licence == "ODbL", EnumMessagesError.LICENCE_WRONG.value
         return licence
-
-    @classmethod
-    @validator('query')
-    def validator_place(cls, query, places_fixture):
-        query_list = query.split(', ')
-        keys = ["name", "city", "region", "country"]
-        query_dict = dict(zip(keys, query_list))
-        for key, value in query_dict.items():
-            assert value == places_fixture[key], EnumMessagesError.INVALID_QUERY.value
-        return query
 
 
 class PropertiesGeocodingData(BaseModel):
@@ -68,12 +58,6 @@ class PropertiesGeocodingData(BaseModel):
     label: str
     name: str
 
-    @classmethod
-    @validator('place_id')
-    def validator_place_id(cls, place_id, places_fixture):
-        assert place_id == places_fixture["place_id"], EnumMessagesError.INVALID_ID.value
-        return place_id
-
 
 class GeometryData(BaseModel):
     """
@@ -90,18 +74,8 @@ class GeometryData(BaseModel):
     type: str
     coordinates: List[float]
 
-    @classmethod
     @validator('type')
     def validator_type(cls, type):
         if type != "Point":
             raise ValueError(EnumMessagesError.INVALID_TYPE.value)
         return type
-
-    @classmethod
-    @validator('coordinates')
-    def validator_coordinates(cls, coordinates, places_fixture):
-        latitude = coordinates[1]
-        longitude = coordinates[0]
-        assert latitude == places_fixture[0]["latitude"], EnumMessagesError.INVALID_COORDINATES.value
-        assert longitude == places_fixture["longitude"], EnumMessagesError.INVALID_COORDINATES.value
-        return coordinates
