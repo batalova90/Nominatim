@@ -3,12 +3,13 @@ import json
 import pytest
 import requests
 import logging
-import sys
+import inspect
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
 # from tests.test_api.request_response_output import allure_attach_response, allure_attach_request
-import random
+
+
 
 @pytest.fixture(scope="session")
 def search_fixture():
@@ -44,38 +45,56 @@ def places_fixture(request):
     return data_places
 
 
-def pytest_collection_modifyitems(session, config, items: list):
-    # print(f'\nConfig: {config}'
-          # f'\nsession: {session}')
-    items_temp = []
-    for item in items:
-        item.name = item.name[:item.name.find('[')]
-        items_temp.append(item.name)
-        # print(f'item.name id: {item._nodeid}')
-        # print(item.reportinfo())
-    # items[:] = items_temp
+@pytest.mark.trylast
+def pytest_configure(config):
+    terminal = config.pluginmanager.getplugin('terminalreporter')
+    config.pluginmanager.register(TestDescriptionPlugin(terminal), 'testdescription')
 
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_make_collect_report(collector):
+    pass
+
+class TestDescriptionPlugin:
+    def __init__(self, terminal):
+        self.terminal_reporter = terminal
+        self.desc = None
+
+    def pytest_runtest_protocol(self, item):
+        item.name = item.name[:item.name.find('[')]
+        self.desc = inspect.getdoc(item.obj)
+        # print(self.terminal_reporter.node.name)
+        # self.terminal_reporter = item.name
+
+    @pytest.hookimpl(hookwrapper=True, tryfirst=True)
+    def pytest_runtest_logstart(self, nodeid, location):
+        # print(self.terminal_reporter.verbosity)
+        if self.terminal_reporter.verbosity == 0:
+            yield
+        else:
+            self.terminal_reporter.write('\n')
+            yield
+            if self.desc:
+                self.terminal_reporter.write(f'\n{self.desc}')
+
+
+def pytest_collection_modifyitems(session, config, items: list):
     skip_parameter = config.getoption('--skip')
     if not (skip_parameter is None):
         for item in items:
-            print(item.keywords)
             if skip_parameter in item.keywords:
                 item.add_marker(pytest.mark.skip)
+    # print(items)
+
 
 """
-def pytest_pycollect_makeitem(collector, name, obj):
-    name_temp = 'hjrtiohjirtjhitrhjrithjrithjr'
-    name = name_temp
-    print(name)
-    print(obj)
-    print('\n\n\n')
-"""
-
 def pytest_itemcollected(item):
-    print(item)
+    # print(item)
     # item.name = item.name[:item.name.find('[')]
     i =  random.randint(1, 1000)
     item._node_id = item._nodeid[:item._nodeid.find('[')] + str(i)
+
+"""
 """
 def pytest_report_collectionfinish(config, start_path, startdir, items):
     for item in items:
@@ -106,7 +125,6 @@ def pytest_exception_interact(node, call, report):
         return
     msg = get_message(call, node.name)
     logging.exception(msg)
-
 
 def get_message(call_info, name, fixture=None):
     seporator = 5*'------------------'
