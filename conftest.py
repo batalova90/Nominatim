@@ -4,11 +4,10 @@ import pytest
 import requests
 import logging
 import inspect
+# import sys
 from tests.test_api.enum_api import EnumAPI
 from tests.test_api.test_reverse.reverse import Reverse
 from tests.test_api.test_search.search import Search
-# from tests.test_api.request_response_output import allure_attach_response, allure_attach_request
-
 
 
 @pytest.fixture(scope="session")
@@ -49,11 +48,8 @@ def places_fixture(request):
 def pytest_configure(config):
     terminal = config.pluginmanager.getplugin('terminalreporter')
     config.pluginmanager.register(TestDescriptionPlugin(terminal), 'testdescription')
+    print(config)
 
-
-@pytest.hookimpl(tryfirst=True)
-def pytest_make_collect_report(collector):
-    pass
 
 class TestDescriptionPlugin:
     def __init__(self, terminal):
@@ -61,29 +57,40 @@ class TestDescriptionPlugin:
         self.desc = None
 
     def pytest_runtest_protocol(self, item):
-        item.name = item.name[:item.name.find('[')]
         self.desc = inspect.getdoc(item.obj)
-        # print(self.terminal_reporter.node.name)
+
+        #print(self.terminal_reporter.showlongtestinfo)
         # self.terminal_reporter = item.name
 
     @pytest.hookimpl(hookwrapper=True, tryfirst=True)
     def pytest_runtest_logstart(self, nodeid, location):
-        # print(self.terminal_reporter.verbosity)
+        # print(self.terminal_reporter)
+        # print(self.write_fspath_result(nodeid, 'bgtrbrt'))
+        if self.terminal_reporter.showlongtestinfo:
+            line = self.terminal_reporter._locationline(nodeid, *location) # [:self.terminal_reporter._locationline.find('[')]
+            # print(f'----------74-----------{line}\t{location}')
+            fsid = nodeid.split("[")[0]
+            self.terminal_reporter.write_ensure_prefix(fsid, "")
         if self.terminal_reporter.verbosity == 0:
             yield
         else:
             self.terminal_reporter.write('\n')
             yield
-            if self.desc:
-                self.terminal_reporter.write(f'\n{self.desc}')
 
 
 def pytest_collection_modifyitems(session, config, items: list):
     skip_parameter = config.getoption('--skip')
+    items_temp = []
     if not (skip_parameter is None):
         for item in items:
             if skip_parameter in item.keywords:
                 item.add_marker(pytest.mark.skip)
+    for item in items:
+        item.name = item.originalname or item.name
+        items_temp.append(item)
+
+        # print(item.name)
+    items[:] = items_temp
     # print(items)
 
 
