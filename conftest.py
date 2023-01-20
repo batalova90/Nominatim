@@ -1,4 +1,5 @@
 import pytest
+import sys
 import _pytest
 import logging
 import inspect
@@ -20,19 +21,38 @@ def pytest_collection_modifyitems(session, config, items: list):
     # print(items_temp)
 
 
-
+"""
 def pytest_runtest_protocol(item, nextitem):
     print(f'after: {item} before{nextitem}\n')
 
 def pytest_runtest_logfinish(nodeid, location):
     print(f'fifnish: {nodeid}')
+"""
+
+"""
 
 """
 @pytest.mark.trylast
 def pytest_configure(config):
-    terminal = config.pluginmanager.getplugin('terminalreporter')
-    config.pluginmanager.register(TestDescriptionPlugin(terminal, config), 'testdescription')
-    
+    # reporter = terminal.TerminalReporter(config, sys.stdout)
+    # config.pluginmanager.register(reporter, "terminalreporter")
+
+    # terminal = config.pluginmanager.getplugin('terminalreporter')
+    # config.pluginmanager.register(TestDescriptionPlugin(terminal, config), 'testdescription')
+    old_cwd_relative_nodeid = config.cwd_relative_nodeid
+    print(f'----------{config.invocation_params}')
+    def cwd_relative_nodeid(*args):
+        result = old_cwd_relative_nodeid(*args)
+        result = result.replace("src/tests/", "")
+        result = result.replace("packages/", "")
+        result = result.replace("::test_", "::")
+        return result
+
+    config.cwd_relative_nodeid = cwd_relative_nodeid
+
+
+
+"""    
 class TestDescriptionPlugin(terminal.TerminalReporter):
     def __init__(self, terminal, config):
         super().__init__(config)
@@ -72,7 +92,7 @@ class TestDescriptionPlugin(terminal.TerminalReporter):
         else:
             self.terminal_reporter.write('\n')
             yield    
- 
+
         def pytest_runtest_logstart(self, nodeid, location):
         # ensure that the path is printed before the
         # 1st test of a module starts running
@@ -124,6 +144,8 @@ def get_message(call_info, name, fixture=None):
 https://www.lambdatest.com/automation-testing-advisor/python/pytest-pytest_exception_interact
 
 https://happytest-apidoc.readthedocs.io/en/latest/api/_pytest.terminal/# terminal
+
+https://happytest-apidoc.readthedocs.io/en/latest/_modules/_pytest/terminal/
 """
 
 
